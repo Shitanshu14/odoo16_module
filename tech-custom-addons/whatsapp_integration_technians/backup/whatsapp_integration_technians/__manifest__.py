@@ -1,0 +1,31 @@
+{
+    'name': 'Odoo Whatsapp Technians',
+    'version': '16.0',
+    'summary': 'Odoo Whatsapp Integration',
+    'author': 'Technian',
+    'company': 'Technians',
+    'maintainer': 'Technians',
+    'sequence': 4,
+    'license': 'LGPL-3',
+    'description': """Odoo Whatsapp Integration""",
+    'category': 'Connector',
+    'depends': [
+        'base', 'contacts', 'sale', 'crm', 'stock', 'sale_management', 'account', 'purchase'
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/whatsapp_template.xml',
+        'views/sale_wt.xml',
+        'views/crm_wt.xml',
+        'views/purchase_wt.xml',
+        'views/stock_wt.xml',
+        'views/invoice_wt.xml',
+        'views/contact_wt.xml',
+        'wizard/wizard.xml',
+    ], 
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

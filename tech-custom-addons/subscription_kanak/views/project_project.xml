@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="tech_project_services" model="ir.ui.view">
+            <field name="name">tech.project.services</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <!-- <field name="subscription_id" /> -->
+
+                    <!-- <field name="subscription_line_ids" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/> -->
+                </xpath>
+                <xpath expr="//page[@name='settings']" position="after">
+                    <page name="project_services_page" string="Services">
+                        <!--          attrs="{'invisible':[('project_service_ids', '=', [])]}">-->
+                        <field name="project_service_ids" widget="many2many_tags">
+                            <!-- <tree>
+                                <field name="display_name" string="Services"/>
+                            </tree> -->
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <!-- Search View -->
+        <record id="tech_project_search" model="ir.ui.view">
+            <field name="name">tech.project.search</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="0" string="Group By">
+                        <filter string="Services" name="group_by_service"
+                                context="{'group_by': 'project_service_ids'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

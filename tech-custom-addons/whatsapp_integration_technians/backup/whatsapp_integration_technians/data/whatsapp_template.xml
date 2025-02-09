@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="sales_whatsapp_template" model="mail.template">
+        <field name="name">Sales: Confirm Order [Whatsapp:]</field>
+        <field name="subject">Sales Confirm</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        Hello <t t-esc= "object.partner_id.name or ''"/><br>
+        Your order <t t-esc= "object.name or ''"/> amount <t t-esc= "format_amount(object.amount_total, object.currency_id) or ''"/>  is Confirmed.
+        <br>
+        Kindly refer below link for order receipt.
+        <br />
+        <t t-esc="user.name"/>
+        ]]>
+        </field>
+    </record>
+
+    <record id="purchase_whatsapp_template" model="mail.template">
+        <field name="name">Purchase: Confirm Order [Whatsapp:]</field>
+        <field name="subject">Purchase Order</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Dear <t t-esc= "object.partner_id.name or ''"/><br/>
+                <t t-if="object.partner_id.parent_id">
+                    (<t t-esc="object.partner_id.parent_id.name"/>)
+                </t>
+                <br/>
+                Here is in attachment a purchase order <strong><t t-esc="object.name"/></strong>
+                <t t-if="object.partner_ref">
+                    with reference: <t t-esc="object.partner_ref"/>
+                </t>
+                amounting in <strong><t t-esc="format_amount(object.amount_total, object.currency_id)"/></strong>
+                from <t t-esc="object.company_id.name"/>.
+                <br/><br/>
+                If you have any questions, please do not hesitate to contact us.
+                <br/><br/>
+                Best regards,<br />
+                <t t-esc="user.name"/>
+            </p>
+        ]]>
+        </field>       
+    </record>
+    
+    <record id="invoice_whatsapp_template" model="mail.template">
+        <field name="name">Invoice: Send by WhatsApp [Whatsapp:]</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="subject">Purchase Order</field>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Dear
+                <t t-if="object.partner_id.parent_id">
+                    <t t-esc="object.partner_id.name"/> (<t t-esc="object.partner_id.parent_id.name"/>),
+                </t>
+                <t t-if="not object.partner_id.parent_id">
+                    <t t-esc="object.partner_id.name"/>,
+                </t>
+                <br /><br />
+                Here is your
+                <t t-if="object.name">
+                    invoice <strong><t t-esc="object.name"/></strong>
+                </t>
+                <t t-if="not object.name">
+                    invoice
+                </t>
+                <t t-if="object.invoice_origin">
+                    (with reference: <t t-esc="object.invoice_origin"/>)
+                </t>
+                amounting in <strong><t t-esc="format_amount(object.amount_total, object.currency_id)"/></strong>
+                from <t t-esc="object.company_id.name"/>.
+                <t t-if="object.payment_state == 'paid'">
+                    This invoice is already paid.
+                </t>
+                <t t-if="object.payment_state != 'paid'">
+                    Please remit payment at your earliest convenience.
+                    <t t-if="object.payment_reference">
+                    <br /><br />
+                    Please use the following communication for your payment: <strong><t t-esc="object.payment_reference"/></strong>.
+                    </t>
+                </t>
+                <br /><br />
+                Do not hesitate to contact us if you have any questions.<br />
+                <t t-esc="user.name"/>
+                </p>
+
+        ]]>
+        </field>
+    </record>
+</odoo>

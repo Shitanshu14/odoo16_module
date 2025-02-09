@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <record id="hr_applicant_category_view_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.applicant.category.tree</field>
+        <field name="model">hr.applicant.category</field>
+       <field name="inherit_id" ref="hr_recruitment.hr_applicant_category_view_tree" />
+        <field name="arch" type="xml">
+          <xpath expr="//tree/field[@name='name']" position="after">
+               <field name="application_count" string="Applicants Count"/>
+          </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

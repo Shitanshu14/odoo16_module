@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="employer_list_view" model="ir.ui.view" >
+            <field name="name">employer.list.view</field>
+            <field name="model">hr.employer</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+        <record id="employer_form_view" model="ir.ui.view" >
+            <field name="name">employer.form.view</field>
+            <field name="model">hr.employer</field>
+            <field name="arch" type="xml">
+                <form><label for="name" class="oe_inline"/>
+                        <field name="name" required="1"/>
+                </form>
+            </field>
+        </record>
+         <record id="employer_action_view" model="ir.actions.act_window" >
+            <field name="name">Employer</field>
+            <field name="res_model">hr.employer</field>
+            <field name="view_mode">tree,form</field>
+         </record>
+         <menuitem id="hr.employer_menu" name="Employers" parent="hr_recruitment.menu_hr_recruitment_config_applications" action="employer_action_view"
+        groups="base.group_system" sequence="0"/>
+    </data> 
+</odoo>

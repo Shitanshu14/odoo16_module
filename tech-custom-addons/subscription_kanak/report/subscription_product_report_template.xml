@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_subscription_order_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <t t-set="address">
+                <div t-field="doc.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
+                <p t-if="doc.partner_id.vat">
+                    <t t-esc="doc.company_id.country_id.vat_label or 'Tax ID'" />: <span t-field="doc.partner_id.vat" /></p>
+            </t>
+            <div class="page">
+                <div class="oe_structure" />
+                <h2 class="mt16">
+                    <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                        <span t-if="doc.state not in ['draft']">Subscription # </span>
+                    </t>
+                    <span t-field="doc.name" />
+                </h2>
+                <div class="row mt32 mb32" id="date">
+                    <div t-if="doc.date_order" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Date:</strong>
+                        <p class="m-0" t-field="doc.date_order"/>
+                    </div>
+                    <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Salesperson:</strong>
+                        <p class="m-0" t-field="doc.user_id"/>
+                    </div>
+                </div>
+
+                <t t-set="display_discount" t-value="any(l.discount for l in doc.order_line)"/>
+
+                <table class="table table-sm o_main_table">
+                    <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                    <thead style="display: table-row-group; font-size: 13px;">
+                        <tr>
+                            <th name="th_name" class="text-start">Description</th>
+                            <th name="th_interval" class="text-start">Subscription<br/>Interval</th>
+                            <th name="th_start_date" class="text-start">Start Date</th>
+                            <th name="th_end_date" class="text-center">Date End</th>
+                            <th name="th_next_date" class="text-center">Next Order Date</th>
+                            <th name="th_qty" class="text-center">Quantity</th>
+                            <th name="th_units" class="text-center">UOM</th>
+                            <th name="th_unit_price" class="text-center">Unit Price</th>
+                            <th name="th_discount" class="text-end">Disc.%</th>
+
+                            <th name="th_subtotal" class="text-end">
+                                <span groups="account.group_show_line_subtotals_tax_excluded">Subtotal</span>
+                                <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                            </th>
+                            <th name="th_state" class="text-end">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody" style="font-size: 13px;">
+
+                        <t t-set="current_subtotal" t-value="0"/>
+
+                        <t t-foreach="doc.subscription_line_ids" t-as="line">
+
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                            <tr t-att-class="o_line_section">
+                                <t>
+                                    <td name="td_name"><span t-field="line.name"/></td>
+                                    <td name="td_interval"><span t-field="line.subscription_interval"/></td>    
+                                    <td name="td_start_date"><span t-field="line.date_start"/></td>    
+                                    <td name="td_end_date"><span t-field="line.date_end"/></td>    
+                                    <td name="td_next_date" class="text-center"><span t-field="line.recurring_next_date"/></td>    
+                                    <td name="td_qty" class="text-center"><span t-field="line.quantity"/></td>    
+                                    <td name="td_units" class="text-center"><span t-field="line.product_uom"/></td>    
+                                    <td name="td_unit_price" class="text-center"><span t-field="line.price_unit"/></td>    
+                                    <td name="td_discount" class="text-center"><span t-field="line.discount"/></td>    
+                                    <td name="td_subtotal" class="text-center"><span t-field="line.price_subtotal"/></td>    
+                                    <td name="td_state" class="text-end"><span t-field="line.state"/></td>    
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="clearfix" name="so_total_summary">
+                    <div id="total" class="row" name="total">
+                        <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-2 col-md-4'} ms-auto text-end">
+                            <table class="table table-sm table-borderless">
+                                
+                                <tr class="border-black o_total">
+                                    <td name="td_amount_total_label" class="text-start"><strong>Sub-Total</strong></td>
+                                    <td name="td_amount_total" class="text-end">
+                                        <span t-field="doc.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black o_total">
+                                    <td name="td_amount_total_label" class="text-start"><strong>Taxes</strong></td>
+                                    <td name="td_amount_total" class="text-end">
+                                        <span t-field="doc.amount_tax"/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black o_total">
+                                    <td name="td_amount_total_label" class="text-start"><strong>Total</strong></td>
+                                    <td name="td_amount_total" class="text-end">
+                                        <span t-field="doc.amount_total"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_subscription_product">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="subscription_kanak.report_subscription_order_document" t-lang="doc.partner_id.lang" />
+            </t>
+        </t>
+    </template>
+</odoo>

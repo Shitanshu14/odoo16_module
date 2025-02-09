@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="whatsapp_project_view_form" model="ir.ui.view">
+            <field name="name">whatsapp.view.form.inherit.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="project_whatsapp" string="Whatsapp" type="object" class="btn-secondary"
+                            icon="fa-whatsapp" />
+                </header>
+            </field>
+        </record>
+    </data>
+</odoo> 

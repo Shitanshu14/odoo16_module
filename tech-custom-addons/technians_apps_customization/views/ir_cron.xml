@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1"> 
+     <record id="tech_employee_birthday_email_cron" model="ir.cron">
+            <field name="name">Employee Birthday Wishes Email</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_employee_send_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+    <record id="tech_monthly_anniversary_update_cron" model="ir.cron">
+            <field name="name">Check Monthly Employee Anniversaries</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_monthly_anniversary_update()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <record id="tech_birthday_email_cron" model="ir.cron">
+            <field name="name">Applicant Birthday Wishes Email</field>
+            <field name="model_id" ref="model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_send_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <!--Scheduled Action for Birthday wishes Email-->
+    <record id="tech_lead_birthday_email_cron" model="ir.cron">
+            <field name="name">Lead Birthday Wishes Email</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_send_lead_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <record id="ir_cron_send_daily_leads_report_email" model="ir.cron">
+            <field name="name">Send Daily Leads Report Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="state">code</field>
+            <field name="code">model.send_daily_lead_report()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+</data>
+</odoo>

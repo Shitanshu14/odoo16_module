@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="res_config_settings_form_view">
+        <field name="name">res.config.settings.form.subscription</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='sales_settings_invoicing_policy']//.." position="after">
+                <h2>Product Subscriptions</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for='subscription_before_delivery_reminder_days' string="Delivery Reminder Days" />
+                            <div class="text-muted">
+                                It will send reminder mail before the next delivery
+                            </div>
+                            <div class="text-muted">
+                                <field name="subscription_before_delivery_reminder_days" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

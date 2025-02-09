@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+ts_applicant_task.access_applicant_task_wizard,access_applicant_task_wizard,ts_applicant_task.model_applicant_task_wizard,,1,1,1,1
+ts_applicant_task.access_hr_applicant_task,access_hr_applicant_task,ts_applicant_task.model_hr_applicant_task,,1,1,1,1
+ts_applicant_task.access_hr_applicant,access_hr_applicant,ts_applicant_task.model_hr_applicant,,1,1,1,1

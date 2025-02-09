@@ -1,0 +1,290 @@
+<odoo>
+    <data>
+        <!-- Project Team Search View -->
+        <record id="view_project_team_search" model="ir.ui.view">
+            <field name="name">Project Team Search View</field>
+            <field name="model">project.team.technians</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <filter string="Project Manager  Missing" name="missing_pm" domain="[('project_manager_id','=',False)]"/>
+                    <filter string="Account Manager Missing" name="missing_am" domain="[('account_manager_id','=',False)]"/>
+                    <filter string="Team Members Missing" name="missing_team_members" domain="[('team_member_ids','=',False)]"/>
+                    <filter string="Archived" name="archived_teams" domain="[('active', '=', False)]"/>
+            </search>
+            </field>
+        </record>
+
+        <!-- Account manage missing default filter view -->
+        <record id="action_project_without_account_manager" model="ir.actions.act_window">
+            <field name="name">Projects without Account Manager</field>
+            <field name="res_model">project.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.open_view_project_all"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_missing_am': 1}</field>
+        </record>
+
+        <!-- Project manager missing default filter view -->
+        <record id="action_project_without_project_manager" model="ir.actions.act_window">
+            <field name="name">Projects without Project Manager</field>
+            <field name="res_model">project.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.open_view_project_all"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_missing_pm': 1}</field>
+        </record>
+
+        <!-- End date missing default filter view -->
+        <record id="action_project_without_end_date" model="ir.actions.act_window">
+            <field name="name">Projects without End date</field>
+            <field name="res_model">project.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.open_view_project_all"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_missing_project_date': 1}</field>
+        </record>
+
+        <!-- Customer missing default filter view -->
+        <record id="action_project_without_customer" model="ir.actions.act_window">
+            <field name="name">Projects without Customer</field>
+            <field name="res_model">project.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.open_view_project_all"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_missing_partner': 1}</field>
+        </record>
+
+        <!-- Project Team missing default filter view -->
+        <record id="action_project_without_team" model="ir.actions.act_window">
+            <field name="name">Project Team Missing</field>
+            <field name="res_model">project.project</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="project.open_view_project_all"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_missing_pt': 1}</field>
+        </record>
+        <!-- Project Team Kanban View -->
+        
+        <record id="view_project_team_kanban" model="ir.ui.view">
+    <field name="name">Project Team Kanban View</field>
+    <field name="model">project.team.technians</field>
+    <field name="type">kanban</field>
+    <field name="arch" type="xml">
+        <field name="name"/>
+        <field name="account_manager_id"/>
+        <field name="project_manager_id"/>
+        <kanban class="o_kanban_mobile">
+            <templates>
+                <t t-name="kanban-box">
+                    <div t-att-class="'oe_kanban_global_click'">
+                        <div class="o_primary">
+                            <span class="o_text_overflow text-dark d-block text-bold" t-if="record.name.value">
+                                <h4><t t-esc="record.name.value"/></h4>
+                            </span>
+                            <span class="o_text_overflow text-dark d-block">
+                            
+                                <b>Project Manager </b> 
+                                <!-- <t t-esc="record.project_manager_id.value"/> -->
+                                <field name="account_manager_id" widget="many2one_avatar"/>
+                                
+                            </span>
+                            <span class="o_text_overflow text-dark d-block">
+                                <b>Account Manager </b> 
+                                <field name="account_manager_id" widget="many2one_avatar"/>
+                                <!-- <t t-esc="record.account_manager_id.value"/> -->
+                                
+                            </span>
+                        </div>
+                        <b class="d-block">Team Members</b> <field name="team_member_ids" widget="many2many_tags_avatar"/>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+        <!-- Project Team list view -->
+        <record id="view_project_team_tree" model="ir.ui.view">
+            <field name="name">Project Team Tree View</field>
+            <field name="model">project.team.technians</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="account_manager_id"/>
+                    <field name="project_manager_id"/>
+                    <field name="team_member_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        <!-- Project Team Form view -->
+        <record id="view_team_form" model="ir.ui.view" >
+            <field name="name">project.team.form</field>
+            <field name="model">project.team.technians</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Project Team Name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                        <group>
+                            <field name="account_manager_id" widget="many2one_avatar_user"/>
+                            <field name="project_manager_id" widget="many2one_avatar_user"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                <notebook>
+                <page string="Project Team"  groups="project.group_project_user">
+                        <field name="team_member_ids" widget="many2many" options="{'create_edit':True}">
+                            <!-- <tree editable="bottom">
+                                                    <field name="name" />
+                                                    <field name="login" />
+                            </tree> -->
+                <kanban quick_create="false" create="true" delete="true">
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click" style="max-width: 200px">
+                                                <div class="o_kanban_record_top">
+                                                    <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0" alt="Avatar"/>
+                                                    <div class="o_kanban_record_headings ml8">
+                                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                                    </div>
+                                                    <a t-if="! read_only_mode" type="delete" class="text-danger">
+                                                        <i class="fa fa-times" title="Delete"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                        </field>
+                </page>
+                </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Add Project Team and Account Manager fields in Project form view -->
+        <record id="view_project_form_inherit" model="ir.ui.view">
+            <field name="name">project.form.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project" />
+            <field name="arch" type="xml">
+                <!-- Extend the existing form view -->
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="account_manager_id" widget="many2one_avatar_user"/>
+                    <field name="project_team_id" groups="project_team_technians.tech_group_pt_user"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Show Team Members Tab on Project form View  -->
+        <record id="view_project_form_extension" model="ir.ui.view">
+            <field name="name">project.form.extension</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+
+                <notebook >
+                <page string="Project Team" attrs="{'invisible':[('project_team_id', '=', False)]}" groups="project_team_technians.tech_group_pt_user">
+                        <field name="team_member_ids" widget="many2many" options="{'create_edit':True}">
+                <kanban quick_create="false" create="true" delete="true">
+                                    <field name="id"/>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click" style="max-width: 200px">
+                                                <div class="o_kanban_record_top">
+                                                    <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0" alt="Avatar"/>
+                                                    <div class="o_kanban_record_headings ml8">
+                                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                                    </div>
+                                                    <a t-if="! read_only_mode" type="delete" class="text-danger">
+                                                        <i class="fa fa-times" title="Delete"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                        </field>
+                </page>
+                </notebook>
+            </field>
+        </record>
+
+        <!-- Search View for Group by filters -->
+        <record id="tech_project_search_by_acm" model="ir.ui.view">
+         <field name="name">tech.project.search.acm</field>
+         <field name="model">project.project</field>
+         <field name="inherit_id" ref="project.view_project_project_filter" />
+         <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group By">
+                    <filter string="Account Manager" name="group_by_acm" context="{'group_by': 'account_manager_id'}"/>
+                    <filter string="Team Member" name="group_by_team_member" context="{'group_by': 'team_member_ids'}"/>
+                </group>
+            </search>
+         </field>
+      </record>
+
+        <!--Add Project Team Menu link under project configuration -->
+    <record id="team_menu_action" model="ir.actions.act_window">
+        <field name="name">Project Team</field>
+        <field name="res_model">project.team.technians</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <menuitem id="project_team_menus" name="Project Team"
+       parent='project.menu_main_pm' sequence="8" action="team_menu_action" groups="project.group_project_manager,base.group_system"/>
+        <record id="tech_project_kanban_view" model="ir.ui.view">
+            <field name="name">project.kanban.inherit</field>
+                    <field name="model">project.project</field>
+                    <field name="inherit_id" ref="project.view_project_kanban" />
+                    <field name="arch" type="xml">
+        <xpath expr="//div[hasclass('o_project_kanban_main')]" position="after">
+                        <div class="px-3">
+                            <strong attrs="{'invisible':[('account_manager_id', '=', False)]}" > AM -</strong> 
+                            <field name="account_manager_id" />
+                            <br />
+                            <strong attrs="{'invisible':[('user_id', '=', False)]}" > PM - </strong>
+                            <field name="user_id" />
+                        
+                        </div>
+                    </xpath>
+            </field>
+        </record>
+
+<!--Project Team User Roles-->
+<record id="tech_group_pt_user" model="res.groups">
+        <field name="name">Project Team User</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>    
+<record id="tech_group_pt_manager" model="res.groups">
+        <field name="name">Project Team Manager</field>
+        <field name="implied_ids" eval="[(4, ref('project_team_technians.tech_group_pt_user'))]"/>
+    </record>
+    
+<record id="missing_filters" model="ir.ui.view">
+    <field name="name">pt.missing.filter</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_project_filter" />
+    <field name="arch" type="xml">
+        <search>
+            <filter string="Project Team Missing" name="missing_pt" domain="[('project_team_id','=',False), ('stage_id.fold' ,'=',False)]"/>
+            <filter string="Project Manager  Missing" name="missing_pm" domain="[('user_id','=',False), ('stage_id.fold' ,'=',False)]"/>
+            <filter string="Account Manager Missing" name="missing_am" domain="[('account_manager_id','=',False), ('stage_id.fold' ,'=',False)]"/>
+            <filter string="Customer Missing" name="missing_partner" domain="[('partner_id','=',False), ('stage_id.fold' ,'=',False)]"/>
+            <filter string="Project Date Missing" name="missing_project_date" domain="[('date_start','=',False),('date','=',False), ('stage_id.fold' ,'=',False)]"/>
+        </search>
+    </field>
+</record>
+    </data>
+</odoo>

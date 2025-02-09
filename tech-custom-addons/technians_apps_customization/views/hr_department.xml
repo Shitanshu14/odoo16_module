@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_hr_department_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.department.tree.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_tree"/> <!-- Ensure the correct view ID -->
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="department_expense" sum="Total" string="Total Expense"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_department_kanban_inherit" model="ir.ui.view">
+        <field name="name">hr.department.kanban.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.hr_department_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_card_lower_content']" position="inside">
+                <div>
+                    <t t-if="record.department_expense.raw_value">
+                        <span>Total Expense:</span>
+                        <span>
+                            <field name="department_expense"/>
+                        </span>
+                    </t>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_department_form_inherit" model="ir.ui.view">
+        <field name="name">hr.department.form.inherit</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form"/> <!-- Reference the correct form view -->
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group>
+                    <field name="department_expense" string="Total Expense"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

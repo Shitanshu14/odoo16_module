@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="quick_create_task_id" model="ir.ui.view">
+        <field name="name">quick.create.task.wizard.form</field>
+        <field name="model">quick.task.wizard</field>
+        <field name="arch" type="xml">
+            <form name="Task Create">
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex flex-row">
+                            <field name="name" class="o_text_overflow" placeholder="Task Title..." required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id" required="1" domain="[('stage_id.fold','=',False)]"/>
+                            <field name="deadline_date" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="task_stage_id" domain="[('project_ids', 'in', [project_id])]"/>
+                            <field name="user_ids" required="1" widget="many2many_tags" domain="[('share', '=', False)]"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Create task" type="object" name="create_project" class="btn-primary text-capitalize"/>
+                    <button string="Create and edit task" type="object" name="save_and_edit_form"  class="btn-primary text-capitalize"/>
+                    <button string="Save and create new" type="object" name="save_and_create_new_task"
+                          class="btn-primary text-capitalize"/>
+                    <button string="Create &amp; Start Timer" type="object" name="create_and_start_timer" class="btn-primary text-capitalize"/>
+                    OR
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="quick_create_task_wizard_action" model="ir.actions.act_window">
+        <field name="name">Quickly Create Task</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">quick.task.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dashboard_block,access.dashboard.block,model_dashboard_block,base.group_user,0,0,0,0
+access_dashboard_block_create,access.dashboard.block,model_dashboard_block,advanced_dynamic_dashboard.ts_dashboard_manager,1,1,1,1
+access_dashboard_menu,access.dashboard.menu,model_dashboard_menu,base.group_user,0,0,0,0
+access_dashboard_menu_create,access.dashboard.menu,model_dashboard_menu,advanced_dynamic_dashboard.ts_dashboard_manager,1,1,1,1
+access_dashboard_mail,access.dashboard.mail,model_dashboard_mail,base.group_user,0,0,0,0
+access_dashboard_mail_create,access.dashboard.mail,model_dashboard_mail,advanced_dynamic_dashboard.ts_dashboard_manager,1,1,1,1

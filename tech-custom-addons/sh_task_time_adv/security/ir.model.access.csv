@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_sh_task_time_account_line,access_sh_task_time_account_line,model_sh_task_time_account_line,base.group_user,1,1,1,1
+access_sh_start_timesheet,access_sh_start_timesheet,model_sh_start_timesheet,base.group_user,1,1,1,1
+access_quick_task_wizard,quick.task.wizard,model_quick_task_wizard,,1,1,1,1
+access_create_task_timer_description,create.task.timer.description,model_task_timer_description,project.group_project_manager,1,1,1,1
+access_task_timer_description,task.timer.description,model_task_timer_description,base.group_user,1,0,0,0

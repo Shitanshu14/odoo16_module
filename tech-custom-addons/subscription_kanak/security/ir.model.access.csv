@@ -1,0 +1,9 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"subscription_manager","Recurring manager","model_subscription_subscription","account.group_account_manager",1,1,1,1
+"subscription_user","Recurring user","model_subscription_subscription","account.group_account_invoice",1,0,0,0
+"subscription_portal","Portal user","model_subscription_subscription","",1,1,1,0
+"subscription_line_manager","Recurring manager","model_subscription_line","account.group_account_manager",1,1,1,1
+"subscription_line_user","Recurring user","model_subscription_line","account.group_account_invoice",1,0,0,0
+"subscription_line_portal","Portal user","model_subscription_line","",1,1,1,0
+"subscription_intervals_manager","subscription_intervals manager","model_subscription_intervals","account.group_account_manager",1,1,1,1
+"subscription_intervals_user","subscription_intervals user","model_subscription_intervals","",1,0,0,0

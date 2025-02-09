@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="TaskTimerTemplate">
+        <div style="display: flex;align-items: center;background: transparent;position: relative;top: 1px;">
+            <li class="sh_timer_task"
+                style="width:fit-content;display: flex;position: relative;justify-content: center;align-items: center;height: 38px;">
+                <span id="user_task"></span>
+                <span id="task_timer"></span>
+                <a href="#" id="timer_start" style="display: none;" title="Start Timer">
+                    <i class="fa fa-play" style="color:#fff;"/>
+                </a>
+                <a href="#" id="timer_stop" style="display: none;" title="Stop Timer">
+                    <i class="fa fa-stop" style="color:#fff;"/>
+                </a>
+            </li>
+        </div>
+    </t>
+    <t t-name="QuicklyTaskCreateTemplate">
+        <t t-inherit="web.WebClient" t-inherit-mode="extension">
+            <xpath expr="//header/div[contains(@class, 'o_sub_menu')]" position="after" class="bg-transparent">
+                <t t-name="QuicklyTaskCreateTemplate">
+                    <t t-inherit="web.WebClient" t-inherit-mode="extension">
+                        <xpath expr="//header/div[contains(@class, 'o_sub_menu')]"
+                               position="inside" >
+                            <button id="task_start" class="o_task_button bg-primary" type="button"
+                                    style="width:50px;height:50px ;border-radius:50px !important"
+                                    title="Create Task"
+                            >
+                                <i class="fa fa-pencil-square-o fa-2x"></i>
+                            </button>
+                        </xpath>
+                    </t>
+                </t>
+
+            </xpath>
+        </t>
+    </t>
+    <!--        <t t-name="QuicklyTaskCreateTemplate">-->
+    <!--            <t t-inherit="web.WebClient" t-inherit-mode="extension">-->
+    <!--                <xpath expr="//header/div[contains(@class, 'o_sub_menu')]" position="inside">-->
+    <!--                    <button id="task_start" title="Create Task" class="btn btn-primary" type="button">CREATE TASK</button>-->
+    <!--                </xpath>-->
+    <!--            </t>-->
+    <!--        </t>-->
+</templates>

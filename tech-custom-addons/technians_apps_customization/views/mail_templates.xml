@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_technians_martech" model="mail.template">
+            <field name="name">Unanswered call: If you receive a query from the customer</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">We received your query! | Technians MarTech Agency</field>
+          
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{ (object.email_from or '') }}</field>
+            <field name="partner_to">{{ object.partner_id.id or '' }}</field>
+
+            <!-- <field name="reply_to">{{ user.email_formatted }}</field> -->
+            <field name="auto_delete" eval="False"/>
+            
+            <field name="template_category">custom_template</field>
+            <field name="body_html" type="html">
+                <p>Dear <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this email finds you well.</p>
+                <p>I recently attempted to reach you via phone regarding your inquiry about our MarTech solutions at
+                    Technians.
+                </p>
+                <p>Unfortunately, I was unable to connect with you.</p>
+                <p>If you could give me a convenient time to reach out to you, that would be great since I know your
+                    schedule must be packed.
+                </p>
+                <p>Thank you for your patience, and I look forward to assisting you further.</p>
+            </field>
+            <field name="lang">{{ object.partner_id.lang or '' }}</field>
+        </record>
+
+        <record id="email_template_technians_query_closure" model="mail.template">
+            <field name="name">Closing conversation: If the customer has not responded within 10 days from the initial contact</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Your Query is About to Close – Act Now!</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well.</p>
+                <p>I have been trying to reach out to you multiple times for the past few days to explain how I can help dominate your market with our MarTech expertise.</p>
+                <p>However, it seems that you are currently not considering our services, which I completely
+                    understand.
+                </p>
+                <p>I just wanted to ensure there are no outstanding questions or concerns on your end before I close
+                    your query.
+                </p>
+                <p>Feel free to reach out if your situation changes or if you need any assistance in the future.</p>
+                <p>Thank you for considering Technians.</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_closing_query_soon" model="mail.template">
+            <field name="name">Closing conversation: If the customer has not picked up the call within the last 10 days after 1-2 calls or meetings.</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Closing Your Query Soon – Any Last Questions?</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope you're doing well.</p>
+                <p>We’ve had a couple of productive conversations, and I believe we were on a good path toward achieving
+                    your goals.
+                </p>
+                <p>I understand you might be busy, but I wanted to check if you’re still interested in moving forward or
+                    if there have been any changes on your end.
+                </p>
+                <p>If you have any questions or need further information, please feel free to reach out. I’m here to
+                    assist in any way possible.
+                </p>
+                <p>If we don’t hear from you in the next few days, I’ll assume priorities have shifted and will close
+                    our conversation for now. Of course, if you decide to revisit this in the future, we’d be happy to
+                    pick up where we left off.
+                </p>
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_reschedule_request" model="mail.template">
+            <field name="name">Asking for Meeting Reschedule</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Reschedule Request: When Works Best for You? | Technians MarTech Agency</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope you’re doing well.</p>
+                <p> Our meeting was scheduled. Unfortunately, we weren’t
+                    able to connect as planned.
+                </p>
+                <p>I was wondering if we could reschedule our meeting.</p>
+                <p>Please let me know your availability over the next few days, and I’ll do my best to accommodate your
+                    schedule.
+                </p>
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_tried_calling" model="mail.template">
+            <field name="name">Unanswered call fresh lead or untouched lead</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Tried calling you, {{ object.name }}!</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this email finds you well!</p>
+                <p>I recently tried reaching out to you via phone to discuss potential opportunities for enhancing your
+                    digital marketing and technology strategy with Technians.
+                </p>
+                <p>Since I couldn’t connect with you, I wanted to follow up via email.</p>
+                <p>If you’re willing to schedule a quick call/E-Meet at your convenience so that I can learn more about
+                    your needs and discuss how we can assist you, I am sure your schedule must be packed, please let me
+                    know a suitable time for you.
+                </p>
+                <p>Looking forward to connecting with you!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_meeting_confirmation" model="mail.template">
+            <field name="name">Meeting confirmation</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Meeting Confirmation | Technians</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Dear <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well. I am writing to confirm our scheduled meeting.
+                </p>
+                <p>I would appreciate it if you could confirm your availability for the meeting.</p>
+                <p>Looking forward to our discussion and productive outcomes.</p>
+                <p>Thank you and best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_apologies_missed_call" model="mail.template">
+            <field name="name">Phone call missed
+            </field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">We Missed Your Call | Let's Reschedule
+            </field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.contact_name or object.name" />!</p>
+                <p>I hope this message finds you well.</p>
+                <p>I noticed that we missed your call and wanted to reach out to offer my sincerest apologies for the
+                    inconvenience this may have caused.
+                </p>
+                <p>Your call is important to us, and I want to ensure that we address your needs promptly.</p>
+                <p>Please let me know a convenient time for you to have a call, or feel free to respond to this email
+                    with any questions or concerns you might have.
+                </p>
+                <p>I’m here to assist you and provide any information you need. Looking forward to connecting with you
+                    soon!
+                </p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_forget_us_already" model="mail.template">
+            <field name="name">Client shows interest but is not picking up calls - follow-up email</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Did you forget us already, {{ object.name }}? | Technians Martech Agency
+            </field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well.</p>
+                <p>Recently, we had the opportunity to discuss your interest in our Martech services at
+                    Technians.
+                </p>
+                <p>I tried calling you again, but unfortunately, we could not connect. We understand that
+                    things can get busy, and we want to ensure we're here to support your needs effectively.
+                </p>
+                <p>Could we schedule a quick call or meeting this week to discuss how we can assist further? I'd be
+                    obliged to provide you with more details and answer any questions you may have.
+                </p>
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_linkedin_post" model="mail.template">
+            <field name="name">LinkedIn email: We noticed your LinkedIn post and attempted to connect but were unable to reach you.
+</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">We saw your LinkedIn post!</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well.</p>
+                <p>I recently came across your LinkedIn post about your search for an Advertising Agency.
+                </p>
+                <p>I tried contacting you, but unfortunately, we couldn’t connect.</p>
+                <p>I’m a member of Technians, we bring over a decade of expertise, having collaborated with over 1300
+                    brands to drive their success with our personalized digital marketing and technology strategies.
+                </p>
+                <p>We believe in crafting tailored marketing and technology solutions which address our clients’ unique
+                    needs and requirements.
+                </p>
+                <p>I have attached our company’s profile at the bottom of this email, which showcases our capabilities
+                    and some of the impactful results we’ve achieved.
+                </p>
+                <p>I would love to discuss how we can tailor our solutions to meet your brand's unique needs over a free
+                    consultation. If you could help me with your availability, that would be greatly appreciated.
+                </p>
+                <p>Looking forward to the opportunity to connect!</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_tailored_solutions" model="mail.template">
+            <field name="name">LinkedIn Mail: We noticed your LinkedIn post but couldn't find your contact number</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Tailored Digital Marketing and Technology Solutions Await – Let's Connect!</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope you're doing well.</p>
+                <p>I recently came across your LinkedIn post about your search for an Advertising Agency to support your business needs, I believe we are exactly what you’re looking for.
+                </p>
+                <p>At Technians, we specialize in innovative technology and marketing solutions, backed by over a decade of experience with over 1300 brands in the past decade. I wanted to get in touch with you to understand your requirements better and explore how we can add value to your business, but unfortunately, I couldn’t find a contact number.
+                </p>
+                <p>If you could share the contact number of the person responsible for marketing in your company, that
+                    would be great.
+                </p>
+                <p>Additionally, please let us know a convenient time when we can connect for a detailed discussion.</p>
+                <p>Looking forward to your response and the opportunity to collaborate!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_following_up_referral" model="mail.template">
+            <field name="name">Apollo -Client looped in the right POC, mail to POC regarding your reference from the client</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Discussing How Technians Can Drive Success for Your Company</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well.</p>
+                <p>In regards to your company's interest in our services, I reached out to you following a referral from a colleague of yours.
+
+                </p>
+                <p>I hope you've had a chance to review the emails we sent earlier about how we, Technians, with over a
+                    decade of experience, have been driving success for over 1300 brands.
+                </p>
+                <p>I tried reaching you today, but unfortunately, we couldn’t connect.</p>
+                <p>If you could let me know a convenient time for a discussion over the phone or an e-meet, that would
+                    be great.
+                </p>
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="email_template_technians_unable_to_reach" model="mail.template">
+            <field name="name">Apollo: The designated POC did not pick up</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Assistance Requested: Following Up on Our Discussion</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope you're doing well.</p>
+                <p>Thank you for connecting me with the concerned person regarding our discussion. I’ve attempted to reach out to them via phone but haven’t been able to get through.
+
+                </p>
+                <p>We'd really appreciate it if you could share the best contact number or advise on the best way to reach the concerned person directly.
+
+                </p>
+                <p>Looking forward to progressing our discussion.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_introduction" model="mail.template">
+            <field name="name">Company profile</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Introducing Technians: Your Digital Marketing Partner</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hi <t t-out="object.contact_name or object.name" />!</p>
+                <p>I hope you're doing well. I’d like to introduce you to Technians, MarTech Agency dedicated to helping businesses grow online. Here’s some information about us and how we can be of help to your company.
+
+                </p>
+                <h3>Who We Are</h3>
+                <p>Technians is a leading MarTech agency in India, specializing in digital marketing and technology
+                    solutions. We offer a wide range of services to boost your brand, improve online presence, and
+                    deliver real results. Our team of experts focuses on creating strategies that fit the unique needs
+                    and goals of each business we work with.
+                </p>
+                <h3>Our Services</h3>
+                <p>
+                    <strong>Marketing Services</strong>
+                </p>
+                <ul>
+                    <li>
+                        <strong>SEO:</strong>
+                        Improve your website's search rankings to get more traffic.
+                    </li>
+                    <li>
+                        <strong>Paid Media:</strong>
+                        Manage your PPC ads to maximize your returns.
+                    </li>
+                    <li>
+                        <strong>E-commerce Marketing:</strong>
+                        Increase your online store’s sales.
+                    </li>
+                    <li>
+                        <strong>Social Media Marketing:</strong>
+                        Enhance your social media engagement and reach.
+                    </li>
+                    <li>
+                        <strong>Content Marketing:</strong>
+                        Website content, SEO-friendly content, blog writing, and marketing copy.
+                    </li>
+                    <li>
+                        <strong>Email Whatsapp Marketing</strong>
+                    </li>
+                    <li>
+                        <strong>Influencers Marketing</strong>
+                    </li>
+                </ul>
+                <p>
+                    <strong>Creative Services</strong>
+                </p>
+                <ul>
+                    <li>
+                        <strong>Website Design Development:</strong>
+                        Create attractive, user-friendly websites.
+                    </li>
+                    <li>
+                        <strong>UI/UX Design:</strong>
+                        Design interfaces that are easy and enjoyable for users to use.
+                    </li>
+                    <li>
+                        <strong>Video Production:</strong>
+                        Make engaging videos to promote your brand.
+                    </li>
+                </ul>
+                <p>
+                    <strong>Technology Services</strong>
+                </p>
+                <ul>
+                    <li>
+                        <strong>Web Applications:</strong>
+                        Build custom web applications for your needs.
+                    </li>
+                    <li>
+                        <strong>ERP/CRM Systems:</strong>
+                        Implement systems to improve your business operations and customer management.
+                    </li>
+                    <li>
+                        <strong>Mobile App Development:</strong>
+                        Develop mobile apps to connect with your audience.
+                    </li>
+                </ul>
+                <h3>Why Technians?</h3>
+                <ul>
+                    <li>
+                        <strong>Customized Strategies:</strong>
+                        We create plans tailored to your specific goals.
+                    </li>
+                    <li>
+                        <strong>Experienced Team:</strong>
+                        Our team brings expertise and innovative ideas.
+                    </li>
+                    <li>
+                        <strong>Proven Success:</strong>
+                        We have a track record of delivering great results.
+                    </li>
+                    <li>
+                        <strong>Client Focused:</strong>
+                        We work closely with you to ensure your success.
+                    </li>
+                </ul>
+                <h3>What We Do</h3>
+                <p>At Technians, we don’t just provide services—we partner with you to achieve meaningful growth. Here’s
+                    how we’ve made a difference for our clients:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Increased Online Visibility:</strong>
+                        We’ve boosted search rankings, resulting in more traffic and qualified leads for our clients.
+                    </li>
+                    <li>
+                        <strong>Enhanced Brand Engagement:</strong>
+                        Our social media and content strategies have helped brands connect more deeply with their
+                        audience.
+                    </li>
+                    <li>
+                        <strong>Higher Conversion Rates:</strong>
+                        Through effective paid media and user-friendly web design, we’ve turned more visitors into
+                        customers.
+                    </li>
+                    <li>
+                        <strong>Streamlined Business Operations:</strong>
+                        Our ERP/CRM solutions have improved internal processes and customer relationship management.
+                    </li>
+                    <li>
+                        <strong>Cutting-Edge Solutions:</strong>
+                        We stay ahead of digital trends to offer innovative solutions tailored to our clients’ unique
+                        needs.
+                    </li>
+                </ul>
+                <h3>Let’s Connect</h3>
+                <p>I’d love to discuss how Technians can add great value to {{ object.company }}. Please reply to this
+                    email or contact me to set up a call.
+                </p>
+                <p>Thank you for considering Technians. I look forward to speaking with you.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        <record id="email_template_technians_case_study" model="mail.template">
+            <field name="name">CASE STUDY TEMPLATE</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="subject">Case Study: How We Drove Success for Your Company</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.contact_name or object.name" />,</p>
+                <p>I hope this message finds you well.</p>
+                <p>I wanted to share a recent success story that demonstrates how Technians has helped companies like
+                    yours overcome their challenges and achieve significant results with our MarTech solutions.
+                </p>
+                <p>To help you understand the kind of results we can deliver, I have attached a case study at the end of this email. Please take a moment to review it.
+                </p>
+                <p>I believe we can achieve similar, or even better success for your company. I'd love to discuss how we can tailor our solutions to meet your company’s specific needs.
+
+                </p>
+                <p>I would really appreciate it if you could let me know a convenient time for a discussion over the
+                    phone or an e-meet.
+                </p>
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+    </data>
+</odoo>

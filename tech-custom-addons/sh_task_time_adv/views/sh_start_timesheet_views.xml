@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="start_timesheet_form">
+        <field name="name">Start Task Timer</field>
+        <field name="model">sh.start.timesheet</field>
+        <field name="arch" type="xml">
+            <form string="Start Task Timer">
+                <group>
+                    <group>
+                        <field name="employee_id" readonly="True" />
+                        
+                        <label for="project_id" />
+                        <div class="o_row">
+                            <field name="project_id" placeholder="Private" widget="project_private_task" domain="[('stage_id.fold','=',False)]" options="{'no_create':True}"/>
+                            <span>or</span>
+                            <button class="btn-primary" name="%(quick_create_task_wizard_action)d" string="Create Task" type="action"/>
+                        </div>
+                        <field name="task_id" options="{'no_create': True}"/>
+                        <field name="start_date" string="Start Time"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="button_start_task" string="Start Task Timer" type="object" class="oe_highlight" />
+                    or
+                    <button special="cancel" string="Cancel" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_start_task">
+        <field name="name">Start Task Timer </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sh.start.timesheet</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

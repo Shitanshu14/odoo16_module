@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="maintenance_equip_form_inherit" model="ir.ui.view">
+            <field name="name">tech_euipment.form.inherit</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='serial_no']" position="replace" >
+                     <field name="serial_no" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+

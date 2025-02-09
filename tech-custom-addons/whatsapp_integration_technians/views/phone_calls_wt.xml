@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="whatsapp_calls_view_form" model="ir.ui.view">
+            <field name="name">whatsapp.view.form.inherit.calls</field>
+            <field name="model">calls.technians</field>
+            <field name="inherit_id" ref="phone_calls_technians.calls_form_view"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="calls_whatsapp" string="Whatsapp" type="object" class="btn-secondary"
+                            icon="fa-whatsapp" />
+                </header>
+            </field>
+        </record>
+    </data>
+</odoo> 

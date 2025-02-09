@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="subscription_intervals_tree_view" model="ir.ui.view">
+        <field name="name">subscription.intervals.tree</field>
+        <field name="model">subscription.intervals</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" />
+                <field name="recurring_interval" class="oe_inline" />
+                <field name="recurring_rule_type" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_subscription_intervals" model="ir.actions.act_window">
+        <field name="name">Subscription Intervals</field>
+        <field name="res_model">subscription.intervals</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new subscription intervals.
+            </p>
+        </field>
+    </record>
+    <menuitem id="subscription_intervals_menu" name="Subscription Intervals" parent="sale.menu_sale_config" action="action_subscription_intervals" sequence="10" />
+</odoo>

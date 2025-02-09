@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_application_line_form" model="ir.ui.view">
+            <field name="name">Application Line Form View</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false">
+                    <header>
+                        <field name="app_stage_line_ids" widget="statusbar" options="{'clickable': '1'}"/>
+                        <button name="action_send_training_mail" type="object" string="Send by Email"
+                                class="oe_highlight" groups="odoo_training_management_app.group_training_manager"/>
+                    </header>
+                    <sheet>
+                         <div class="oe_button_box" name="button_box">
+                            <button name="view_task" attrs="{'invisible': [('task_count', '=', 0)]}"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-pencil-square-o" groups="odoo_training_management_app.group_training_user">
+                                <field string="Tasks" name="task_count" widget="statinfo"/>
+                            </button>
+                         </div>
+                        <div class="oe_title">
+                            <h1 class="o_row">
+                                <field name="number" placeholder="Number..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+
+                                <field name='employee_id'/>
+                                <field name='training_center_id' readonly='1'/>
+                                <field name='course_id' readonly='1'/>
+                                <field name="applicant_id"/>
+                                <field name='create_date'/>
+                                <field name='project_id'/>
+                            </group>
+                            <group>
+                                <field name='user_id'/>
+                                <field name='class_room_id' domain="[('training_center_id','=', training_center_id)]"
+                                       readonly='1'/>
+                                <!--  <field name='subject_ids' domain="[('course_id','=',course_id)]" widget="many2many_tags" readonly='1'/> -->
+                                <field name='subject_ids' widget="many2many_tags" readonly='1'/>
+                                <field name='start_date' readonly='1'/>
+                                <field name='end_date' readonly='1'/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="description_page" string="Description">
+                                <field name="description" class="oe_inline" placeholder="Description" readonly='1'/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_application_line_tree" model="ir.ui.view">
+            <field name="name">Application Line Tree View</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Trainings" create="false" edit="false" default_order='create_date desc'>
+                    <field name='number'/>
+                    <field name='employee_id'/>
+                    <field name='user_id'/>
+                    <field name='project_id'/>
+                    <field name='create_date'/>
+                    <field name='course_id'/>
+                    <field name='description'/>
+                    <field name='training_center_id'/>
+                    <field name='class_room_id'/>
+                    <field name='start_date'/>
+                    <field name='end_date'/>
+                    <field name='app_stage_line_ids'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_application_line_search" model="ir.ui.view">
+            <field name="name">Application Line Search View</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name='number'/>
+
+                    <field name='employee_id'/>
+                    <field name='user_id'/>
+                    <field name='project_id'/>
+                    <field name='create_date'/>
+                    <field name='course_id'/>
+                    <field name='description'/>
+                    <field name='training_center_id'/>
+                    <field name='class_room_id'/>
+                    <field name='start_date'/>
+                    <field name='end_date'/>
+                    <field name='app_stage_line_ids'/>
+                    <filter string="Created Today" name="created_today"
+                            domain="[('create_date', '&gt;=',context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Created Yesterday" name="created_yesterday"
+                            domain="[('create_date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('create_date','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]"/>
+                    <filter string="This Week" name="current_week"
+                            domain="[('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))),  ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"/>
+                    <filter string="Last Week" name="last_week"
+                            domain="[('create_date', '&lt;=', ((context_today()-relativedelta(weeks=1, weekday=-1)).strftime('%Y-%m-%d'))),  ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=2, weekday=0)).strftime('%Y-%m-%d')))]"/>
+                    <filter string="Overdue" name="overdue"
+                            domain="[('end_date', '&lt;=',context_today()),('app_stage_line_ids', 'not in', ('Completed','Cancelled'))]"/>
+
+                    <filter string="Created On" name="filter_create_date" date="create_date"
+                            default_period="this_month"/>
+                    <filter string="Start Date" name="filter_start_date" date="start_date" default_period="this_month"/>
+                    <filter string="End Date" name="filter_end_date" date="end_date" default_period="this_month"/>
+
+                    <group expand="0" string="Group By">
+                        <filter name="Course" context="{'group_by':'course_id'}"/>
+                        <filter name="Training Center" context="{'group_by':'training_center_id'}"/>
+                        <filter name="Class Room" context="{'group_by':'class_room_id'}"/>
+                        <filter name='Start Date' context="{'group_by':'start_date'}"/>
+                        <filter name='End Date' context="{'group_by':'end_date'}"/>
+                        <filter name='Employee Training Stages' context="{'group_by':'app_stage_line_ids'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_application_line_calendar" model="ir.ui.view">
+            <field name="name">Application Line Calender</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <calendar color="employee_id" date_start="start_date" date_stop="end_date">
+                    <field name="number"/>
+                    <field name="employee_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="view_application_line_pivot" model="ir.ui.view">
+            <field name="name">Application Line Pivot</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Employee Trainings">
+                    <field name='course_id' type="row"/>
+                    <field name="app_stage_line_ids" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_application_line_grapgh" model="ir.ui.view">
+            <field name="name">Application Graph Pivot</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <graph>
+                    <field name='course_id'/>
+                    <field name="app_stage_line_ids"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_training_application_line">
+            <field name="name">Employee Trainings</field>
+            <field name="res_model">emp.training.application.line</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+
+
+        <record id="tech_training_confirm_email_template" model="mail.template">
+            <field name="name">Employee Training Email</field>
+            <field name="model_id"
+                   ref="odoo_training_management_app.model_emp_training_application_line"/>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{object.employee_id.user_id.login}},{{object.user_id.login}}</field>
+            <!-- <field name="email_cc">{{object.employee_id.parent_id.user_id.login}}, {{object.employee_id.coach_id.user_id.login}}</field>        -->
+            <field name="auto_delete">False</field>
+            <field name="subject">{{object.employee_id.name}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Dear<t t-out="object.employee_id.name or 'Applicant'"/>,
+                            <br/>
+                            Your Training Details are as Mentioned below --
+                            <br/>
+                            <strong>Course</strong>
+                            <t t-out="object.course_id.name or ''"/>
+                            <br/>
+                            <strong>Start Date</strong>
+                            <t t-out="object.start_date or ''"/>
+                            <br/>
+                            <strong>End Date</strong>
+                            <t t-out="object.end_date or ''"/>
+                            <br/>
+                        </p>
+
+                        <t t-if="object.user_id.signature">
+                            <br/>
+                            <t t-out="object.user_id.signature or ''"></t>
+                        </t>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <record id="employee_training_kanban_id" model="ir.ui.view">
+            <field name="name">Employee Training kanban View</field>
+            <field name="model">emp.training.application.line</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" default_order='create_date desc' default_group_by="app_stage_line_ids">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <field name="number"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban">
+                                        <span style="font-weight:bold">Employee:</span>
+                                        <field name="employee_id"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban">
+                                        <span style="font-weight:bold">Trainer:</span>
+                                        <field name="user_id"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban">
+                                        <span style="font-weight:bold">Start Date:</span>
+                                        <field name="start_date"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban">
+                                        <span style="font-weight:bold">End Date:</span>
+                                        <field name="end_date" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

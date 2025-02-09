@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="whatsapp_employee_view_form" model="ir.ui.view">
+            <field name="name">whatsapp.view.form.inherit.employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                        <header>
+                <button name="employee_whatsapp" string="Whatsapp" type="object" class="btn-secondary"
+                            icon="fa-whatsapp" />
+                        </header>
+            </field>
+        </record>
+
+        <record id="whatsapp_recruitment_view_form" model="ir.ui.view">
+            <field name="name">whatsapp.view.form.inherit.recruitment</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                 <header>
+                <button name="recruitment_whatsapp" string="Whatsapp" type="object" class="btn-secondary"
+                            icon="fa-whatsapp" />
+                        </header>
+               
+            </field>
+        </record>
+    </data>
+</odoo> 

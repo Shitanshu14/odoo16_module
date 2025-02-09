@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="project_stage_view" model="ir.ui.view">
+            <field name="name">project.stage.view</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <field name="type_ids" widget="many2many_tags"
+                           options="{'no_create': True, 'no_create_edit':True}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_project_project_filter_inherit" model="ir.ui.view">
+            <field name="name">project.project.select.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='my_projects']" position="after">
+                    <filter name="last_update_status_on_track" string="On Track"
+                            domain="[('last_update_status', '=', 'on_track')]"/>
+                    <filter name="last_update_status_at_risk" string="At Risk"
+                            domain="[('last_update_status', '=', 'at_risk')]"/>
+                    <filter name="last_update_status_off_track" string="Off Track"
+                            domain="[('last_update_status', '=', 'off_track')]"/>
+                    <filter name="last_update_status_on_hold" string="On Hold"
+                            domain="[('last_update_status', '=', 'on_hold')]"/>
+                    <filter name="last_update_status_to_define" string="Set Status"
+                            domain="[('last_update_status', '=', 'to_define')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Add Created by & Created On Columns -->
+        <record id="tech_project_list_view" model="ir.ui.view">
+            <field name="name">tech.project.list.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" position="before">
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- <record id ="tech_project_services" model="ir.ui.view">
+    <field name="name">tech.project.services</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project" />
+    <field name="priority" eval="1" />
+    <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="before" >
+                    <field name="project_service_ids" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/>
+                </xpath>
+            </field>
+        </record> -->
+        <!-- Search View -->
+        <!-- <record id="tech_project_search" model="ir.ui.view">
+           <field name="name">tech.project.search</field>
+           <field name="model">project.project</field>
+           <field name="inherit_id" ref="project.view_project_project_filter" />
+           <field name="arch" type="xml">
+              <search>
+          <group expand="0" string="Group By">
+                      <filter string="Services" name="group_by_service" context="{'group_by': 'project_service_ids'}"/>
+                  </group>
+              </search>
+           </field>
+        </record> -->
+
+        <!-- Project Manager missing Filter -->
+        <!-- <record id="filter_projects_without_pm" model="ir.ui.view">
+                <field name="name">projects.without.pm</field>
+                <field name="model">project.project</field>
+                <field name="inherit_id" ref="project.view_project_project_filter"/>
+                <field name="arch" type="xml">
+                    <search>
+                        <filter string="Missing Project Manager" name="projects_without_pm" domain="[('user_id', '=', False)]" />
+                    </search>
+                </field>
+            </record> -->
+
+        <!-- Filter for Deadline missing tasks -->
+        <!-- <record id="filter_tasks_without_deadline" model="ir.ui.view">
+                <field name="name">tasks.without.deadline</field>
+                <field name="model">project.task</field>
+                <field name="inherit_id" ref="project.view_task_search_form_extended"/>
+                <field name="arch" type="xml">
+                    <search>
+                        <filter string="Missing Deadline" name="tasks_without_deadline" domain="[('date_deadline', '=', False)]" />
+                    </search>
+                </field>
+            </record> -->
+        <!-- Display Kanban Stage text -->
+        <record id="ts_project_task_kanban_stage_view" model="ir.ui.view">
+            <field name="name">project.task.kanban.stage</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/div//field[@name='kanban_state']" position="before">
+                    <field name="kanban_state_label" class="text-end fs-6 mx-2"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Display Kanban Stage text in list view-->
+        <record id="ts_project_task_kanban_stage_list_view" model="ir.ui.view">
+            <field name="name">project.task.kanban.stage.list</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree//field[@name='kanban_state']" position="before">
+                    <field name="kanban_state_label" class="text-end fs-6 mx-2"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

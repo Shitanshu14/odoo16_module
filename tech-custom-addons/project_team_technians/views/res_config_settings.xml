@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_project_team" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.project.team</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="45"/>
+            <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]/div[@data-key='project']" position="inside">
+                        <h2>Project Team Settings</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-lg-12 col-12 o_setting_box">
+                                <div class="oe_title">
+                                    <label for="archive_stage_ids" string="Select Project Stage to Archive Project Team"
+                                           class="col-lg-5 o_form_label"/>
+                                    <div class="text-muted">
+                                        If a Project's Stage is set to any of the Stages selected here, its project
+                                        team will be archived automatically.
+                                    </div>
+                                    <field name="archive_stage_ids" widget='many2many_tags'/>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-12 o_setting_box">
+                                <div class="oe_title">
+                                    <label for="active_stage_ids"
+                                           string="Select Project Stage to Unarchive Project Team"
+                                           class="col-lg-5 o_form_label"/>
+                                    <div class="text-muted">
+                                        If a Project's Stage is set to any of the Stages selected here, the project team
+                                        will be  Unarchive automatically
+                                        action will be triggered.
+                                    </div>
+                                    <field name="active_stage_ids" widget='many2many_tags'/>
+                                </div>
+                            </div>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+        </data>
+        </odoo>

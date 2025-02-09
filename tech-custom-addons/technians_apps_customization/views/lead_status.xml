@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="status_list_view" model="ir.ui.view" >
+            <field name="name">status.list.view</field>
+            <field name="model">lead.status</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="color" widget="color_picker" />
+                    <field name="leads_count" />
+                </tree>
+            </field>
+        </record>
+        <record id="status_form_view" model="ir.ui.view" >
+            <field name="name">status.form.view</field>
+            <field name="model">lead.status</field>
+            <field name="arch" type="xml">
+                <form><label for="name" class="oe_inline"/>
+                        <field name="name" required="1"/>
+                        <field name="color" widget="color_picker"/>
+                </form>
+            </field>
+        </record>
+         <record id="leadstatus_action_view" model="ir.actions.act_window" >
+            <field name="name">Lead Status</field>
+            <field name="res_model">lead.status</field>
+            <field name="view_mode">tree,form</field>
+         </record>
+         <menuitem id="crm.crm_leadstatus_menu" name="Lead Status" parent="crm.menu_crm_config_lead" action="leadstatus_action_view"
+        groups="base.group_system,sales_team.group_sale_manager" sequence="0"/>
+
+        <!-- Count Column in CRM Tags  -->
+        <record id="sales_team_crm_tag_view_tree_tag" model="ir.ui.view">
+            <field name="name">sales.team.crm.tag.view.tree</field>
+            <field name="model">crm.tag</field>
+            <field name="inherit_id" ref="sales_team.sales_team_crm_tag_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='name']" position="after">
+                    <field name="tag_count"/>
+                </xpath>
+            </field>
+        </record>
+    </data> 
+</odoo>

@@ -1,0 +1,1119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@class='o_lead_opportunity_form']" position="replace">
+                    <form class="o_lead_opportunity_form" js_class="crm_form">
+                        <header>
+
+                                    
+                            <button name="action_set_won_rainbowman" string="Won"
+                                    type="object" class="oe_highlight" data-hotkey="w" title="Mark as won"
+                                    attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"/>
+                            <button name="%(crm.crm_lead_lost_action)d" string="Lost" data-hotkey="l"
+                                    title="Mark as lost"
+                                    type="action" context="{'default_lead_id': active_id}"
+                                    attrs="{'invisible': ['|', ('type', '=', 'lead'), '&amp;',('active', '=', False),('probability', '&lt;', 100)]}"/>
+                            <button name="%(crm.action_crm_lead2opportunity_partner)d" string="Convert to Opportunity"
+                                    type="action" help="Convert to Opportunity"
+                                    class="oe_highlight"
+                                    attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('active', '=', False)]}"
+                                    data-hotkey="v"/>
+                            
+                            <button name="toggle_active" string="Restore" type="object" data-hotkey="z"
+                                    attrs="{'invisible': ['|', ('probability', '&gt;', 0), ('active', '=', True)]}"/>
+<!--                            <button name="create_job_applicant" string="Create Applicant"-->
+<!--                                    type="object" help="Convert Lead  To Job Applicant"-->
+<!--                                    class="oe_highlight"-->
+<!--                                    data-hotkey="v"/>-->
+                            <button name="action_set_lost" string="Lost" type="object" data-hotkey="l"
+                                    title="Mark as lost"
+                                    attrs="{'invisible': ['|', ('type', '=', 'opportunity'), '&amp;', ('probability', '=', 0), ('active', '=', False)]}"/>
+                            <field name="stage_id" widget="statusbar" class="o_field_statusbar"
+                                   options="{'clickable': '1', 'fold_field': 'fold'}"
+                                   domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
+                                   attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'lead')]}"/>
+                        </header>
+                        <sheet>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <div class="oe_button_box" name="button_box">
+                                <button name="action_open_linkedin" type="object" icon="fa-linkedin" width="12"
+                                                class="btn btn-primary clearfix" attrs="{'invisible': [('lead_linkedin_url', '=', False)]}"
+                                                 style="background-color:#0074b3">
+                                        </button>
+                                <button name="action_schedule_meeting" type="object"
+                                        class="oe_stat_button" icon="fa-calendar"
+                                        context="{'partner_id': partner_id}"
+                                        attrs="{'invisible': [('type', '=', 'lead')]}">
+                                    <div class="o_stat_info">
+                                        <field name="calendar_event_count" class="o_stat_value"/>
+                                        <span class="o_stat_text"
+                                              attrs="{'invisible': [('calendar_event_count', '&lt;', 2)]}">Meetings
+                                        </span>
+                                        <span class="o_stat_text"
+                                              attrs="{'invisible': [('calendar_event_count', '&gt;', 1)]}">Meeting
+                                        </span>
+                                    </div>
+                                </button>
+                                <button name="action_show_potential_duplicates" type="object"
+                                        class="oe_stat_button" icon="fa-star"
+                                        attrs="{'invisible': [('duplicate_lead_count', '&lt;', 1)]}">
+                                    <div class="o_stat_info">
+                                        <field name="duplicate_lead_count" class="o_stat_value"/>
+                                        <span class="o_stat_text"
+                                              attrs="{'invisible': [('duplicate_lead_count', '&lt;', 2)]}">Similar Leads
+                                        </span>
+                                        <span class="o_stat_text"
+                                              attrs="{'invisible': [('duplicate_lead_count', '&gt;', 1)]}">Similar Lead
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                            <widget name="web_ribbon" title="Lost" bg_color="bg-danger"
+                                    attrs="{'invisible': ['|', ('probability', '&gt;', 0), ('active', '=', True)]}"/>
+                            <widget name="web_ribbon" title="Won"
+                                    attrs="{'invisible': [('probability', '&lt;', 100)]}"/>
+                            <div class="oe_title">
+                                <h1>
+                                    <field class="text-break" name="name" placeholder="e.g. Product Pricing"/>
+                                </h1>
+                                <h2 class="d-flex gap-2 g-0 align-items-end pb-3">
+                                    <div attrs="{'invisible': [('type', '=', 'lead')]}">
+                                        <label for="expected_revenue" class="oe_edit_only pb-1"/>
+                                        <div class="d-flex align-items-end">
+                                            <field name="company_currency" invisible="1"/>
+                                            <field name="expected_revenue" class="oe_inline o_input_13ch"
+                                                   widget='monetary' options="{'currency_field': 'company_currency'}"/>
+                                            <span class="oe_grey p-2" groups="crm.group_use_recurring_revenues">+</span>
+                                            <span class="oe_grey p-2" groups="!crm.group_use_recurring_revenues">at
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div attrs="{'invisible': [('type', '=', 'lead')]}"
+                                         groups="crm.group_use_recurring_revenues">
+                                        <field name="recurring_revenue" class="oe_inline o_input_10ch" widget="monetary"
+                                               options="{'currency_field': 'company_currency'}"/>
+                                    </div>
+                                    <div attrs="{'invisible': [('type', '=', 'lead')]}"
+                                         groups="crm.group_use_recurring_revenues">
+                                        <div class="d-flex align-items-end ps-2">
+                                            <field name="recurring_plan" class="oe_inline o_input_12ch"
+                                                   placeholder="E.g. Monthly"
+                                                   attrs="{'required': [('recurring_revenue', '!=', 0)]}"
+                                                   options="{'no_create': True, 'no_open': True}"/>
+                                            <span class="oe_grey p-2">at</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="oe_edit_only d-md-flex align-items-center">
+                                            <label for="probability"/>
+                                            <div class="d-flex align-items-center">
+                                                <button class="ps-0 ps-md-2 btn btn-link"
+                                                        name="action_set_automated_probability" type="object"
+                                                        attrs="{'invisible': [('is_automated_probability', '=', True)]}">
+                                                    <i class="fa fa-gear" role="img"
+                                                       title="Switch to automatic probability"
+                                                       aria-label="Switch to automatic probability"></i>
+                                                </button>
+                                                <small class="oe_grey h6 mb0 d-flex"
+                                                       attrs="{'invisible': [('is_automated_probability', '=', True)]}">
+                                                    <field class="mb0" name="automated_probability" force_save="1"/>
+                                                    %
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div id="probability" class="d-flex align-items-baseline">
+                                            <field name="is_automated_probability" invisible="1"/>
+                                            <field name="probability" widget="float" class="oe_inline o_input_6ch"/>
+                                            <span class="oe_grey">%</span>
+                                        </div>
+                                    </div>
+                                </h2>
+                            </div>
+                        <group>
+                             <group string='Company Info'>
+                                <field name='partner_name'/>
+<!--<field name='street'/>-->
+                                <field name="lead_industry_id"/>
+                                <field name="lead_no_of_employees"/>
+                                <!-- <field name="lead_jobtitle"/> -->
+                                <field name="website" widget="url"/>
+                                <field name="partner_id" string="Customer"/>
+                                
+                            </group>
+                            <group string="Connect">
+                                <field name="date_deadline" attrs="{'invisible': [('type', '=', 'lead')]}" />
+                                <field name="lead_status_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="show_date_fields" invisible="1"/>
+                                <field name="start_date" attrs="{'invisible': [('show_date_fields', '=', False)]}"/>
+                                <field name="stop_date" attrs="{'invisible': [('show_date_fields', '=', False)]}"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="priority" widget="priority"/>
+                                <field name="user_id"/>
+                                <field name="lead_presales_user_id"/>
+                                <field name="team_id"/>
+                                <field name="date_open" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
+                                <field name="date_closed" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
+                                <field name="day_open" attrs="{'invisible': [('type', '=', 'lead')]}"/>
+                                <field name="day_close" attrs="{'invisible': [('type', '=', 'lead')]}"/>
+                            </group>
+                             <group string="Personal Info">
+                                    <label for="contact_name"/>
+                                    <div class="o_row">
+                                        <field name="contact_name"/>
+                                        <button name="action_open_linkedin" type="object" icon="fa-linkedin" width="12"
+                                                class="btn btn-info clearfix" bgcolor='#0074b3' attrs="{'invisible': [('lead_linkedin_url', '=', False)]}" />
+                                    </div>
+                                    <field name="function"/>
+                                    <field name="lead_jobrole_id"/>
+                                    <field name="lead_linkedin_url" widget="url" />
+                                    
+                                    <field name="lead_dob"/>
+                                    <label for="street" string="Address"/>
+                                    <div class="o_address_format">
+                                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                        <field name="city" placeholder="City" class="o_address_city"/>
+                                        <field name="state_id" class="o_address_state" placeholder="State"
+                                               options='{"no_open": True}'/>
+                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <field name="country_id" placeholder="Country" class="o_address_country"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                    </div>
+                                </group>
+                
+                          
+                            <group string="Contact Info">
+                                <field name="mobile" widget="phone"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="lead_office_phone"/>
+                                <field name="email_from" id="email_from_group_lead_info" widget="email"/>
+                                <field name="email_cc" widget="email"/>
+                            </group>
+                           <group string="Marketing">
+                                <field name="campaign_id" readonly="1" options="{'no_create': True}"/>
+                                <field name="medium_id" readonly="1" options="{'no_create': True}"/>
+                                <field name="source_id" options="{'no_create': True}"/>
+                                <field name='lead_interaction_source' readonly="1"/>
+                                <field name='city'/>
+                                <field name='state_id'/>
+                                <field name="country_id"/>
+                            </group>
+                           
+                            <group>
+                            
+                                </group>
+                        </group>
+
+
+
+                            <group>
+
+                                <group name="lead_partner" attrs="{'invisible': [('type', '=', 'opportunity')]}"
+                                    >
+                                    <!-- Preload all the partner's information -->
+                                    <field name="is_partner_visible" invisible='1'/>
+                                    <field name='partner_id' invisible="1"/>
+
+                                    <field name="lang_active_count" invisible="1"/>
+                                    <field name="lang_code" invisible="1"/>
+                                    <field name="lang_id" attrs="{'invisible': [('lang_active_count', '&lt;=', 1)]}"
+                                           options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                </group>
+
+                                <group name="opportunity_partner" attrs="{'invisible': [('type', '=', 'lead')]}"
+                                     >
+                                    <field name="is_blacklisted" invisible="1"/>
+                                    <field name="partner_is_blacklisted" invisible="1"/>
+                                    <field name="phone_blacklisted" invisible="1"/>
+                                    <field name="mobile_blacklisted" invisible="1"/>
+                                    <field name="email_state" invisible="1"/>
+                                    <field name="phone_state" invisible="1"/>
+                                    <field name="partner_email_update" invisible="1"/>
+                                    <field name="partner_phone_update" invisible="1"/>
+                                    <div class="o_row o_row_readonly">
+                                        <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                                title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                                type="object" context="{'default_phone': phone}"
+                                                groups="base.group_user"
+                                                attrs="{'invisible': [('phone_blacklisted', '=', False)]}"/>
+                                    </div>
+                                    <field name="lost_reason_id" attrs="{'invisible': [('active', '=', True)]}"/>
+                                    <field name="date_conversion" invisible="1"/>
+                                    <field name="user_company_ids" invisible="1"/>
+                                </group>
+                                <group name="lead_info" attrs="{'invisible': [('type', '=', 'opportunity')]}">
+<!--                                    <label for="contact_name"/>-->
+<!--                                    <div class="o_row">-->
+<!--                                        <field name="contact_name"/>-->
+<!--                                        <field name="title" placeholder="Title" domain="[]"-->
+<!--                                               options='{"no_open": True}'/>-->
+<!--                                    </div>-->
+                                    <field name="is_blacklisted" invisible="1"/>
+                                    <field name="phone_blacklisted" invisible="1"/>
+                                    <field name="email_state" invisible="1"/>
+                                    <field name="phone_state" invisible="1"/>
+                                    <field name="partner_email_update" invisible="1"/>
+                                    <field name="partner_phone_update" invisible="1"/>
+                                    <label for="email_from_group_lead_info" class="oe_inline"/>
+                                    <div class="o_row o_row_readonly">
+                                        <button name="mail_action_blacklist_remove" class="fa fa-ban text-danger"
+                                                title="This email is blacklisted for mass mailings. Click to unblacklist."
+                                                type="object" context="{'default_email': email_from}"
+                                                groups="base.group_user"
+                                                attrs="{'invisible': [('is_blacklisted', '=', False)]}"/>
+                                        <!-- <field name="email_from" id="email_from_group_lead_info" string="Email"
+                                               widget="email"/> -->
+                                        <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                              title="By saving this change, the customer email will also be updated."
+                                              attrs="{'invisible': [('partner_email_update', '=', False)]}"/>
+                                    </div>
+<!--                                    <field name="email_cc" groups="base.group_no_one"/>-->
+                                    <!-- <field name="function"/> -->
+<!--                                    <label for="phone_group_lead_info" class="oe_inline"/>-->
+                                    <div class="o_row o_row_readonly">
+                                        <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                                title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                                type="object" context="{'default_phone': phone}"
+                                                groups="base.group_user"
+                                                attrs="{'invisible': [('phone_blacklisted', '=', False)]}"/>
+<!--                                        <field name="phone" id="phone_group_lead_info" widget="phone"/>-->
+<!--                                        <span class="fa fa-exclamation-triangle text-warning oe_edit_only"-->
+<!--                                              title="By saving this change, the customer phone number will also be updated."-->
+<!--                                              attrs="{'invisible': [('partner_phone_update', '=', False)]}"/>-->
+                                    </div>
+<!--                                    <label for="mobile" class="oe_inline"/>-->
+                                    <div class="o_row o_row_readonly">
+                                        <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                                title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                                type="object" context="{'default_phone': mobile}"
+                                                groups="base.group_user"
+                                                attrs="{'invisible': [('mobile_blacklisted', '=', False)]}"/>
+<!--                                        <field name="mobile" widget="phone" string="Mobile"/>-->
+                                    </div>
+                                </group>
+                                <field name="type" invisible="1"/>
+                                <group attrs="{'invisible': [('type', '=', 'lead')]}">
+<!--                                    <field name="user_id"-->
+<!--                                           context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>-->
+<!--                                    <label for="date_deadline">Expected Closing</label>-->
+<!--                                    <div class="o_lead_opportunity_form_inline_fields">-->
+<!--                                        <field name="date_deadline" nolabel="1" class="oe_inline"/>-->
+<!--                                        <field name="priority" widget="priority" nolabel="1"-->
+<!--                                               class="oe_inline align-top"/>-->
+<!--                                    </div>-->
+<!--                                    <field name="tag_ids" widget="many2many_tags"-->
+<!--                                           options="{'color_field': 'color', 'no_create_edit': True}"/>-->
+                                </group>
+                                <group attrs="{'invisible': [('type', '=', 'opportunity')]}">
+<!--                                    <field name="user_id"-->
+<!--                                           context="{'default_sales_team_id': team_id}" widget="many2one_avatar_user"/>-->
+<!--                                    <field name="team_id" options="{'no_open': True, 'no_create': True}"-->
+<!--                                           kanban_view_ref="%(sales_team.crm_team_view_kanban)s"/>-->
+                                </group>
+<!--                                <group name="lead_priority" attrs="{'invisible': [('type', '=', 'opportunity')]}">-->
+<!--                                    <field name="priority" widget="priority"/>-->
+<!--                                    <field name="tag_ids" widget="many2many_tags"-->
+<!--                                           options="{'color_field': 'color', 'no_create_edit': True}"/>-->
+<!--                                </group>-->
+                            </group>
+                            <field attrs="{'invisible': [('team_id', '=', False)]}"
+                                   name="lead_properties" nolabel="1" columns="2" hideKanbanOption="1"/>
+                            <notebook>
+                                <page string="Internal Notes" name="internal_notes">
+                                    <field name="description" placeholder="Add a description..."
+                                           options="{'collaborative': true}"/>
+                                </page>
+                                <page name="extra" string="Extra Info"
+                                      attrs="{'invisible': [('type', '=', 'opportunity')]}">
+                                    <group>
+                                        <group string="Email" groups="base.group_no_one">
+                                            <field name="message_bounce" readonly="1"/>
+                                        </group>
+                                        <group string="Deprecated Fields" name="deprecated">
+                                            <field name="lead_addition_source" readonly="1" />
+                                            <field name="lead_assigned_to" readonly="1" />
+                                            <field name="lead_sub_status" readonly="1"/>
+                                            <field name="lead_status_id" readonly="1"/>
+                                            <field name="lead_source" string="Lead Source[Deprecated]" readonly="1"/>
+                                        </group>
+                                        <group string="Marketing" name="categorization">
+                                            <field name="company_id"
+                                                   groups="base.group_multi_company"
+                                                   options="{'no_create': True}"/>
+                                            <field name="campaign_id" readonly="1"
+                                                   options="{'create_name_field': 'title', 'always_reload': True}"/>
+                                            <field name="medium_id" readonly="1"/>
+                                            <field name="source_id" />
+                                            <field name="referred"/>
+                                        </group>
+                                        <group string="Analysis">
+                                            <field name="date_open"/>
+                                            <field name="date_closed"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page name="lead" string="Extra Information"
+                                      attrs="{'invisible': [('type', '=', 'lead')]}">
+                                    <group>
+                                        <group string="Contact Information">
+                                            <field name="partner_name"/>
+                                            <label for="street_page_lead" string="Address"/>
+                                            <div class="o_address_format">
+                                                <field name="street" id="street_page_lead" placeholder="Street..."
+                                                       class="o_address_street"/>
+                                                <field name="street2" placeholder="Street 2..."
+                                                       class="o_address_street"/>
+                                                <field name="city" placeholder="City" class="o_address_city"/>
+                                                <field name="state_id" class="o_address_state" placeholder="State"
+                                                       options='{"no_open": True}'/>
+                                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                                       options='{"no_open": True, "no_create": True}'/>
+                                            </div>
+                                            <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                                            <field name="lang_active_count" invisible="1"/>
+                                            <field name="lang_id"
+                                                   attrs="{'invisible': [('lang_active_count', '&lt;=', 1)]}"
+                                                   options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                                        </group>
+                                        <group class="mt48">
+                                            <label for="contact_name_page_lead"/>
+                                            <div class="o_row">
+                                                <field name="contact_name" id="contact_name_page_lead"/>
+                                                <field name="title" placeholder="Title" domain="[]"
+                                                       options='{"no_open": True}'/>
+                                            </div>
+                                            <field name="function"/>
+                                            <label for="mobile_page_lead" class="oe_inline"/>
+                                            <div class="o_row o_row_readonly">
+                                                <button name="phone_action_blacklist_remove"
+                                                        class="fa fa-ban text-danger"
+                                                        title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                                        type="object" context="{'default_phone': mobile}"
+                                                        groups="base.group_user"
+                                                        attrs="{'invisible': [('mobile_blacklisted', '=', False)]}"/>
+                                                <field name="mobile" id="mobile_page_lead" widget="phone"/>
+                                            </div>
+                                        </group>
+                                        <group string="Marketing">
+                                            <field name="campaign_id"
+                                                   options="{'create_name_field': 'title', 'always_reload': True}"/>
+                                            <field name="medium_id"/>
+                                            <field name="source_id"/>
+                                            <field name="referred"/>
+                                        </group>
+                                        <group string="Tracking" name="Misc">
+                                            <field name="company_id"
+                                                   groups="base.group_multi_company"
+                                                   options="{'no_create': True}"/>
+                                            <field name="team_id" options="{'no_open': True, 'no_create': True}"
+                                                   context="{'kanban_view_ref' : 'sales_team.crm_team_view_kanban'}"/>
+                                            <field name="day_open"/>
+                                            <field name="day_close"/>
+                                            <field name="type" invisible="1"/>
+                                        </group>
+                                    </group>
+                                </page>
+                                 <page name="marketing_info" string="Marketing">
+                    <group string="UTM Parameters">
+                    <group>
+                    <field options="{'no_create': True}" name="medium_id" help="The medium parameter is a key tool that identifies the marketing channels driving visitors to your site. When we talk about the medium in the context of the HandL UTM Grabber, we're referring to the various platforms or avenues that can be used. These include, but are not limited to, channels such as email and social media
+Example: utm_medium=socialmedia"/>
+                    <field options="{'no_create': True}" name="campaign_id" help="The campaign title parameter is a tool that assists you in identifying and tracking how well a particular campaign is performing.
+Example: utm_campaign=earlyaccess"/>
+                    <field options="{'no_create': True}" name="source_id" help="The source parameter is designed to answer the question: Where are the visitors coming from?
+Example: utm_source=Facebook"/>
+                    <field name="lead_ads_group" help="Google Ads ValueTrack Ads Group Id"/>
+                    <field name="lead_utm_device" help="UTM Device is a parameter that tracks the type of device used by a user to interact with your website or application e.g. Desktop, Mobile"/>
+                    <field name="lead_utm_device_model"/>
+                    <field name="lead_google_gclid" help="Google Ads click ID"/>
+                    <field name="lead_first_utm_campaign" help="Initial value of UTM Campaign"/>
+                    <field name="lead_first_utm_medium" help="Initial value of UTM Medium"/>
+                    <field name="lead_first_utm_source" help="Initial value of UTM Source"/>
+                    <field name="lead_first_utm_term" help="Initial value of UTM Term"/>
+                    <field name="lead_first_utm_content"/>
+
+                    <field name="lead_organic_source_str" help="Organic source (Google, Facebook, Bing, Instagram etc)"/>
+                    <field name="lead_traffic_source" help="Captures the source of traffic, whether it's paid, organic, direct, referral, or other forms. 
+e.g. Paid, Organic, Direct, Referral, Social"/>
+                    <field name="lead_first_traffic_source" help="(First Touch) Paid, Organic, Direct, Referral, Social"/>
+                    <field name="lead_utm_matchtype"/>
+                    <field name="lead_visitor_geo_state"/>
+                    
+                    </group>
+                    <group>
+                    <field name="lead_utm_term" help="The term parameter, also known as the keyword parameter, is a component of UTM that helps to identify specific user interactions. Specifically, it tracks when a visitor clicks through individual products or offerings that you are targeting.
+Example: utm_term=software"/>
+                    <field name="lead_utm_placement" help="Google Ads ValueTrack Placement"/>
+                    <field name="lead_utm_content" help="Content parameter is utilized to identify the specific widget that was clicked on, either in an email, an advertisement, or a promotion Example: utm_content=headerlink"/>
+                    <field name="lead_utm_lp_url" help="URL of the Landing page"/>
+                    <field name="lead_utm_organic_source_url"/>
+                    <field name="lead_first_referral_url" help=" URL of the initial webpage that referred a visitor to your website, marking the starting point of their journey to your site"/>
+                    <field name="lead_last_webpage_visited"/>
+                    <field name="lead_last_referral_url" help="URL of the webpage that referred a visitor to your website. "/>
+                    <field name="lead_interaction_source" readonly="1" help="Interaction Source is a metric in Google Analytics that identifies the source of a user's interaction with your website or application. e.g. Live Chat, Webform"/>
+                    <field name="lead_ga_client_id" help="Google Analytics clientid"/>
+                    <field name="lead_adposition" help="UTM Ad Position is a parameter in Google Ads (formerly Google AdWords) that tracks the position of an ad on a search engine results page (SERP) when a user clicks on it"/>
+
+                    <field name="lead_handl_url" />
+                    <field name="lead_handl_ref_domain" str="Ref Domain" help="Referring Domain"/>
+                    <field name="lead_handl_url_base" string="URL Base"/>
+                    
+                    </group>
+                    </group>
+                </page>
+                            </notebook>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids"/>
+                            <field name="activity_ids"/>
+                            <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </form>
+
+                </xpath>
+
+               
+            </field>
+        </record>
+        <record id="crm_lead_list_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.list.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="before">
+                    <field name="lead_utm_term" optional="show"/>
+                    <field name="lead_utm_placement" optional="hide"/>
+                    <field name="lead_utm_content" optional="hide"/>
+                    <field name="lead_utm_lp_url" optional="hide"/>
+                    <field name="lead_utm_organic_source_url" optional="hide"/>
+                    <field name="lead_first_referral_url" optional="hide"/>
+                    <field name="lead_last_webpage_visited" optional="hide"/>
+                    <field name="lead_last_referral_url" optional="hide"/>
+                    <field name="lead_interaction_source"/>
+                    <field name="lead_ga_client_id" optional="hide"/>
+                    <field name="lead_adposition" optional="hide"/>
+                    <field name="medium_id" optional="hide"/>
+                    <field name="campaign_id" optional="hide"/>
+                    <field name="source_id" optional="hide"/>
+                    <field name="lead_ads_group" optional="hide"/>
+                    <field name="lead_utm_device" optional="hide"/>
+                    <field name="lead_utm_device_model" optional="hide"/>
+                    <field name="lead_google_gclid" optional="hide" />
+                    <field name="lead_first_utm_campaign" optional="hide"/>
+                    <field name="lead_first_utm_medium" optional="hide"/>
+                    <field name="lead_first_utm_source" optional="hide"/>
+                    <field name="lead_first_utm_term" optional="hide"/>
+                    <field name="lead_first_utm_content" optional="hide"/>
+                    <field name="lead_no_of_employees" optional="show"/>
+                    <field name="lead_industry_id" optional="show"/>
+                    <field name="lead_status_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
+                    <field name="lead_jobrole_id" optional="show"/>
+                    <field name="lead_sub_status" optional="show"/>
+                    <field name="lead_dob" optional="show"/>
+                    <field name="lead_addition_source" optional="show"/>
+                    <field name="lead_source" optional="show"/>
+                    <field name="lead_assigned_to" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="lead_search" model="ir.ui.view">
+        <field name="name">crm.lead.filters</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Created Today" name="created_today" domain="[('create_date', '>=',context_today().strftime('%Y-%m-%d'))]" />
+                <filter string="Created Yesterday" name="created_yesterday" domain="[('create_date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('create_date','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]" />
+<filter string="This Week" name="current_week"
+    domain="[('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=6)).strftime('%Y-%m-%d 23:59:59'))), 
+    ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=0, weekday=0)).strftime('%Y-%m-%d 00:00:00')))]"/>
+            
+<filter string="Last Week" name="last_week"
+    domain="[('create_date', '&lt;=', ((context_today()-relativedelta(weeks=1, weekday=6)).strftime('%Y-%m-%d 23:59:59'))), 
+    ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d 00:00:00')))]"/>
+  
+<filter string="Huge CRM" name="huge_crm_data" domain="[('create_date', '&lt;', '2023-02-23 00:00:00')]" />
+    <filter string="ERP Data" name="erp_data" domain="[('create_date', '&gt;=', '2023-02-23 00:00:00')]" />
+            </search>
+        </field>
+    </record>
+    <record id="opportunity_search" model="ir.ui.view">
+        <field name="name">crm.opportunity.filters</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Created Today" name="created_today" domain="[('create_date', '>=',context_today().strftime('%Y-%m-%d'))]" />
+                <filter string="Created Yesterday" name="created_yesterday" domain="[('create_date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('create_date','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]" />
+<filter string="This Week" name="current_week"
+    domain="[('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=6)).strftime('%Y-%m-%d 23:59:59'))), 
+    ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=0, weekday=0)).strftime('%Y-%m-%d 00:00:00')))]"/>
+            
+<filter string="Last Week" name="last_week"
+    domain="[('create_date', '&lt;=', ((context_today()-relativedelta(weeks=1, weekday=6)).strftime('%Y-%m-%d 23:59:59'))), 
+    ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d 00:00:00')))]"/>
+</search>
+     </field>
+    </record>
+<!--Email Template for Birthday wishes-->
+
+   <record id="tech_lead_birthday_email_tpl" model="mail.template">
+        <field name="name">Lead Birthday Email</field>
+        <field name="email_from">{{object.user_id.login}}</field>
+        <field name="subject">{{object.contact_name}}, Technians wishes you a very Happy Birthday! 🎉🎂🎈</field>
+        <field name="email_to">{{object.email_from}}</field>
+        <field name="lang">${object.lang}</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html">
+            <![CDATA[
+                    <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">
+            <tbody>
+                <tr>
+                    <td align="center" style="padding: 0px;">
+                        <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">
+                            <tbody>
+                                <tr>
+                                <td style="text-align: center;padding:0;padding: 53px 0px;color:#fff;background: url(https://technians.com/wp-content/uploads/2024/11/Group-13.png);background-size: cover;" colspan="3">
+                                            <a href="#"><img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png" style="width:200px"></a>
+                                            <div>
+                                               <a href="#"><img src="https://dev.technians.com/shared/technians-email-templates/images/greeting-text.png" style="width: 60%;"></a>
+                                            </div>
+</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 20px 50px 41px;background-color:#ffffff;font-size: 18px;font-family: 'Verdana', sans-serif;background: url(https://stag.technians.com/wp-content/uploads/2023/07/applicant-body.png);background-size: cover;" colspan="3">
+                                            <p style="margin: 10px 0px 0px;">Hey <b><t t-out="object.contact_name or '''there'''"></t>!</b></p>
+                                            <p style="margin: 25px 0px 0px;">The Technians Family wanted to take this opportunity to wish you</p><p style="margin: 25px 0px 0px;">a very Happy Birthday and hope that you have a wonderful day!</p>
+                                            <p style="margin: 25px 0px 0px;background: url(https://technians.com/wp-content/uploads/2023/09/highlighter.png);background-size: 72% 100%;background-position: left;background-repeat: no-repeat;">Sending you warm wishes on your special day.</p>
+                                            <p style="margin: 25px 0px 0px;">So put on your party hats for your big day!</p>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: #1594b4;">
+                                        </tr><tr style="background-color: #1594b4;">
+                                            <td colspan="3" style="padding-bottom: 3px;padding: 20px 120px;text-align: center;font-size: 18px;">
+                                                <p style="color: #fff;">A Premier Digital Marketing &amp; TechnologyAgency Fueled with Creativity &amp; Performance to <strong> #TellYourStory</strong></p>
+                                            </td>
+                                        </tr>
+                                    <tr>
+                                        <td style="background: #f5f5f5;">
+                                            <table style="background: #f5f5f5;padding: 36px 0px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="width: 50%;background: #f5f5f5;" height="35">
+                                                            <a href="https://wa.me/919899920599?text=">
+                                                            <img src="https://technians.com/wp-content/uploads/2024/11/growth.png" style="width: 313px;margin-left: 80px;">
+                                                            </a>
+                                                        </td>
+                                                        <td style="width: 50%;background: #f5f5f5;" height="35">
+                                                            <a href="https://technians.com/job/">
+                                                                <img src="https://technians.com/wp-content/uploads/2024/11/current-opening.png" style="width: 270px;margin-left: 34px;">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: #1594b4;">
+                                        <td colspan="3" style="padding-bottom: 10px;">
+                                        </td>
+                                    </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h3 style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">
+                                            Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <p style="font-size: 17px;font-weight: 700;font-family: 'Verdana', sans-serif;text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span>
+                                            and trusted partner for:</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img style="width: 100%;" src="https://demo.technians.com/devtest/wp-content/uploads/2023/06/final-img.png"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:33px 15px 10px;background-color:#18aec9;" colspan="3">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/gurugram-2.png" alt="gurugram" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Gurgaon</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/delhi-1.png" alt="delhi" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Delhi</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/mumbai-1.png" alt="mumbai" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Mumbai</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/bangaluru-1.png" alt="bangaluru" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Bengaluru</h3>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="background-color: #18aec9;height: 20px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#fff">
+                                    <td colspan="3" style="padding:20px 50px">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+<tr style="background-color:#fff">
+                                    <td colspan="3" style="padding:20px 50px">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+<tr>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/sales-number.png" style="width:109%;float:left">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/call-2-1.gif" style="width: 104%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49.png" style="width: 110%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/whatsapp1.gif" style="width: 104%;float: right;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/salesnumber.png" style="width:107%;float:right">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-mailer.png" style="width: 110%;float: left;">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/call-2-1.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49-2.png" style="width: 112%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/whatsapp1.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-number.png" style="width:110%;float:left">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/need-a-vacation.png" style="width: 100%;float: left;"></a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/footer-mailer.webp" style="width: 100%;float: left;"></a>
+                                    </td>
+                                </tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td></tr></tbody></table></td></tr></tbody></table>
+            ]]>
+        </field>
+    </record>
+
+
+
+
+
+<!--  <record id="tech_lead_birthday_email_tpl" model="mail.template">-->
+<!--        <field name="name">Lead Birthday Email</field>-->
+<!--        <field name="email_from">{{object.user_id.login}}</field>-->
+<!--        <field name="subject">{{object.contact_name}}, Technians wishes you a very Happy Birthday! 🎉🎂🎈</field>-->
+<!--        <field name="email_to">{{object.email_from}}</field>-->
+<!--        <field name="lang">${object.lang}</field>-->
+<!--        <field name="model_id" ref="model_crm_lead"/>-->
+<!--        <field name="auto_delete" eval="False"/>-->
+<!--        <field name="body_html">-->
+<!--            <![CDATA[-->
+<!--                    <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">-->
+<!--            <tbody>-->
+<!--                <tr>-->
+<!--                    <td align="center" style="padding: 0px;">-->
+<!--                        <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">-->
+<!--                            <tbody>-->
+<!--                                <tr>-->
+<!--                                <td style="text-align: center;padding:0;padding: 53px 0px;color:#fff;background: url(https://stag.technians.com/wp-content/uploads/2023/07/Group-13.png);background-size: cover;" colspan="3">-->
+<!--                                            <a href="#"><img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png" style="width:200px"></a>-->
+<!--                                            <div>-->
+<!--                                               <a href="#"><img src="https://dev.technians.com/shared/technians-email-templates/images/greeting-text.png" style="width: 60%;"></a>-->
+<!--                                            </div>-->
+<!--</td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td style="padding: 20px 50px 41px;background-color:#ffffff;font-size: 18px;font-family: 'Verdana', sans-serif;background: url(https://stag.technians.com/wp-content/uploads/2023/07/applicant-body.png);background-size: cover;" colspan="3">-->
+<!--                                            <p style="margin: 10px 0px 0px;">Hey <b><t t-out="object.contact_name or '''there'''"></t>!</b></p>-->
+<!--                                            <p style="margin: 25px 0px 0px;">The Technians Family wanted to take this opportunity to wish you</p><p style="margin: 25px 0px 0px;">a very Happy Birthday and hope that you have a wonderful day!</p>-->
+<!--                                            <p style="margin: 25px 0px 0px;background: url(https://stag.technians.com/wp-content/uploads/2023/07/highlighter.png);background-size: 72% 100%;background-position: left;background-repeat: no-repeat;">Sending you warm wishes on your special day.</p>-->
+<!--                                            <p style="margin: 25px 0px 0px;">So put on your party hats for your big day!</p>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr style="background-color: #1594b4;">-->
+<!--                                        </tr><tr style="background-color: #1594b4;">-->
+<!--                                            <td colspan="3" style="padding-bottom: 3px;padding: 20px 120px;text-align: center;font-size: 18px;">-->
+<!--                                                <p style="color: #fff;">A Premier Digital Marketing &amp; TechnologyAgency Fueled with Creativity &amp; Performance to <strong> #TellYourStory</strong></p>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td style="background: #f5f5f5;">-->
+<!--                                            <table style="background: #f5f5f5;padding: 36px 0px;">-->
+<!--                                                <tbody>-->
+<!--                                                    <tr>-->
+<!--                                                        <td style="width: 50%;background: #f5f5f5;" height="35">-->
+<!--                                                            <a href="https://wa.me/919899920599?text=">-->
+<!--                                                            <img src="https://stag.technians.com/wp-content/uploads/2023/07/growth.png" style="width: 313px;margin-left: 80px;">-->
+<!--                                                            </a>-->
+<!--                                                        </td>-->
+<!--                                                        <td style="width: 50%;background: #f5f5f5;" height="35">-->
+<!--                                                            <a href="https://technians.com/job/">-->
+<!--                                                                <img src="https://stag.technians.com/wp-content/uploads/2023/07/current-opening.png" style="width: 270px;margin-left: 34px;">-->
+<!--                                                            </a>-->
+<!--                                                        </td>-->
+<!--                                                    </tr>-->
+<!--                                                </tbody>-->
+<!--                                            </table>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr style="background-color: #1594b4;">-->
+<!--                                        <td colspan="3" style="padding-bottom: 10px;">-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <h3 style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">-->
+<!--                                            Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" style="width: 100%;">-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <p style="font-size: 17px;font-weight: 700;font-family: 'Verdana', sans-serif;text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span>-->
+<!--                                            and trusted partner for:</p>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <a href="#"><img style="width: 100%;" src="https://demo.technians.com/devtest/wp-content/uploads/2023/06/final-img.png"></a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td style="padding:33px 15px 10px;background-color:#18aec9;" colspan="3">-->
+<!--                                        <table>-->
+<!--                                            <tbody>-->
+<!--                                                <tr>-->
+<!--                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">-->
+<!--                                                        <img src="https://stag.technians.com/wp-content/uploads/2023/07/gurugram-2.png" alt="gurugram" style="width: 40px;">-->
+<!--                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                        padding-top: 10px;">Gurgaon</h3>-->
+<!--                                                    </td>-->
+<!--                                                    <td>-->
+<!--                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">-->
+<!--                                                    </td>-->
+<!--                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                        <img src="https://stag.technians.com/wp-content/uploads/2023/07/delhi-1.png" alt="delhi" style="width: 40px;">-->
+<!--                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                        padding-top: 10px;">Delhi</h3>-->
+<!--                                                    </td>-->
+<!--                                                    <td>-->
+<!--                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">-->
+<!--                                                    </td>-->
+<!--                                                    <td style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">-->
+<!--                                                        <img src="https://stag.technians.com/wp-content/uploads/2023/07/mumbai-1.png" alt="mumbai" style="width: 40px;">-->
+<!--                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                        padding-top: 10px;">Mumbai</h3>-->
+<!--                                                    </td>-->
+<!--                                                    <td>-->
+<!--                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">-->
+<!--                                                    </td>-->
+<!--                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                        <img src="https://stag.technians.com/wp-content/uploads/2023/07/bangaluru-1.png" alt="bangaluru" style="width: 40px;">-->
+<!--                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                        padding-top: 10px;">Bengaluru</h3>-->
+<!--                                                    </td>-->
+<!--                                                </tr>-->
+<!--                                                <tr>-->
+<!--                                                    <td colspan="8" style="background-color: #18aec9;height: 20px;"></td>-->
+<!--                                                </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr style="background-color:#fff">-->
+<!--                                    <td colspan="3" style="padding:20px 50px">-->
+<!--                                        <table>-->
+<!--                                            <tbody>-->
+<!--                                                <tr>-->
+<!--                                                    <td>-->
+<!--                                                        <table>-->
+<!--                                                            <tbody>-->
+<!--<tr style="background-color:#fff">-->
+<!--                                    <td colspan="3" style="padding:20px 50px">-->
+<!--                                        <table>-->
+<!--                                            <tbody>-->
+<!--                                                <tr>-->
+<!--                                                    <td>-->
+<!--                                                        <table>-->
+<!--                                                            <tbody>-->
+<!--<tr>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <img src="https://stag.technians.com/wp-content/uploads/2023/05/sales-number.png" style="width:109%;float:left">-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="tel:9899920599">-->
+<!--                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/call-2-1.gif" style="width: 104%;float: left;background: #ececec;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="https://wa.me/919899920599?text=">-->
+<!--                                                                            <img src="https://stag.technians.com/wp-content/uploads/2023/05/New-Project-49.png" style="width: 110%;float: left;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="https://wa.me/919899920599?text=">-->
+<!--                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/whatsapp1.gif" style="width: 104%;float: right;background: #ececec;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/salesnumber.png" style="width:107%;float:right">-->
+<!--                                                                    </td>-->
+<!--                                                                </tr>-->
+<!--                                                            </tbody>-->
+<!--                                                        </table>-->
+<!--                                                    </td>-->
+<!--                                                    <td>-->
+<!--                                                        <table>-->
+<!--                                                            <tbody>-->
+<!--                                                                <tr>-->
+<!--                                                                    <td style="padding: 0px;">-->
+<!--                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-mailer.png" style="width: 110%;float: left;">-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="tel:9899920599">-->
+<!--                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/call-2-1.gif" style="width: 105%;float: left;background: #ececec;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="https://wa.me/919899920599?text=">-->
+<!--                                                                            <img src="https://stag.technians.com/wp-content/uploads/2023/05/New-Project-49-2.png" style="width: 112%;float: left;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding:0px">-->
+<!--                                                                        <a href="https://wa.me/919899920599?text=">-->
+<!--                                                                            <img src="https://demo.technians.com/devtest/wp-content/uploads/2023/05/whatsapp1.gif" style="width: 105%;float: left;background: #ececec;">-->
+<!--                                                                        </a>-->
+<!--                                                                    </td>-->
+<!--                                                                    <td style="padding: 0px;">-->
+<!--                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-number.png" style="width:110%;float:left">-->
+<!--                                                                    </td>-->
+<!--                                                                </tr>-->
+<!--                                                            </tbody>-->
+<!--                                                        </table>-->
+<!--                                                    </td>-->
+<!--                                                </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <a href="#"><img src="https://stag.technians.com/wp-content/uploads/2023/05/need-a-vacation.png" style="width: 100%;float: left;"></a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+
+<!--                                <tr>-->
+<!--                                    <td colspan="3">-->
+<!--                                        <a href="#"><img src="https://stag.technians.com/wp-content/uploads/2023/05/footer-mailer.webp" style="width: 100%;float: left;"></a>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</td></tr></tbody></table></td></tr></tbody></table>-->
+<!--            ]]>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--Scheduled Action for Birthday wishes Email-->
+    <record id="tech_lead_birthday_email_cron" model="ir.cron">
+            <field name="name">Lead Birthday Wishes Email</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_send_lead_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+<!-- Modification Date filter 29 September -->
+<record id="lead_search_extended" model="ir.ui.view">
+        <field name="name">crm.lead.filters.ext</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_creation_date']" position="after">
+              <filter string="Modify Date" name="filter_updation_date" date="write_date" default_period="this_month"/>
+            </xpath>
+        </field>
+</record>
+
+<record id="crm_opportunity_form_inherit" model="ir.ui.view">
+            <field name="name">crm.opportunity.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='expected_revenue']" position="replace">
+                    <field name="expected_revenue" class="oe_inline o_input_8ch" widget="monetary" options="{'currency_field': 'company_currency'}" required="1"/>
+                </xpath>
+            </field>
+</record>
+<!-- Group by lead status filter -->
+<record id="view_crm_case_opportunities_filter_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.search</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="priority">32</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group//filter[@name='city']" position="after">
+                    <filter string="Lead Status" name="lead_status" context="{'group_by':'lead_status_ids'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_crm_case_leads_filter_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.search.lead</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="priority">32</field>
+            <field name="arch" type="xml">
+                <xpath expr="//group//filter[@name='city']" position="after">
+                    <filter string="Lead Status" name="lead_status" context="{'group_by':'lead_status_ids'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ir_cron_send_daily_leads_report_email" model="ir.cron">
+            <field name="name">Send Daily Leads Report Email</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="state">code</field>
+            <field name="code">model.send_daily_lead_report()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+        </record>
+
+         <record id="crm_case_tree_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.tree.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="default_order">id desc</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="create_crm_to_applicant" model="ir.actions.server">
+        <field name="name">Create Applicant</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="binding_model_id" ref="model_crm_lead"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.create_job_applicant()
+        </field>
+    </record>
+
+    </data>
+</odoo>

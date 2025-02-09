@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="jobrole_list_view" model="ir.ui.view" >
+            <field name="name">jobrole.list.view</field>
+            <field name="model">job.roles</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+        <record id="jobrole_form_view" model="ir.ui.view" >
+            <field name="name">jobrole.form.view</field>
+            <field name="model">job.roles</field>
+            <field name="arch" type="xml">
+                <form><label for="name" class="oe_inline"/>
+                        <field name="name" required="1"/>
+                </form>
+            </field>
+        </record>
+         <record id="jobrole_action_view" model="ir.actions.act_window" >
+            <field name="name">Job Role</field>
+            <field name="res_model">job.roles</field>
+            <field name="view_mode">tree,form</field>
+         </record>
+
+         <menuitem id="crm.crm_jobroles_menu" name="Job Roles" parent="crm.menu_crm_config_lead" action="jobrole_action_view"
+        groups="base.group_system" sequence="0"/>
+    </data> 
+</odoo>

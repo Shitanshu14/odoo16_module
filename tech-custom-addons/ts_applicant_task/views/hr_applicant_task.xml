@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_job_task" model="ir.ui.view">
+        <field name="name">hr.job.task</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Applicant Tasks">
+                    <field mode="tree" name="applicant_task_ids" widget="section_and_note_one2many"
+                           groups="hr_recruitment.group_hr_recruitment_user">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="deadline_days"/>
+                            <field name="description"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="hr_applicant_task_view" model="ir.ui.view">
+        <field name="name">Task for Applicant</field>
+        <field name="model">hr.applicant.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="job_id" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="deadline_days"/>
+                        </group>
+                        <group string="Task Description">
+                        </group>
+                        <field name="description"/>
+                        <group string="Attachments">
+                        </group>
+                        <field name="attachment_ids" widget="many2many_binary" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_applicant_task_view_tree" model="ir.ui.view">
+        <field name="name">Tasks for Applicant</field>
+        <field name="model">hr.applicant.task</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="job_id" widget="many2many_tags"/>
+                <field name="deadline_days"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_applicant_task_views" model="ir.actions.act_window">
+        <field name="name">Tasks for Applicant</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.applicant.task</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="hr_applicant_task_view_tree"/>
+    </record>
+
+    <menuitem id="menu_hr_recruitment_config_applicant_task"
+              name="Tasks"
+              parent="hr_recruitment.menu_hr_recruitment_configuration"
+              sequence="9"/>
+
+    <menuitem
+            name="Applicant Tasks"
+            id="menuitem_applicant_task"
+            parent="menu_hr_recruitment_config_applicant_task"
+            sequence="80"
+            action="action_hr_applicant_task_views"
+            groups="hr_recruitment.group_hr_recruitment_user"/>
+
+</odoo>

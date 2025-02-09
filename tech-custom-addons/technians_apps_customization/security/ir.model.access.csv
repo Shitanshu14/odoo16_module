@@ -1,0 +1,9 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_read_lead_status,access_lead_status,model_lead_status,base.group_user,1,0,0,0
+access_create_lead_status,access_lead_status,model_lead_status,sales_team.group_sale_manager,1,1,1,1
+access_jobroles,access_jobroles,model_job_roles,base.group_user,1,1,1,1
+access_city,access_city,model_res_country_city,base.group_user,1,1,1,1
+access_hr_employer,access_hr_employer,model_hr_employer,base.group_user,1,0,0,0
+access_hr_employer_admin,access_hr_employer_admin,model_hr_employer,hr_recruitment.group_hr_recruitment_user,1,1,1,1
+access_sale_order_line_project,access_sale_order_line_project_user,model_sale_order_line,project.group_project_user,1,0,0,0
+access_applicant_job_wizard,access_applicant_job_wizard,model_applicant_job_wizard,base.group_user,1,1,1,1

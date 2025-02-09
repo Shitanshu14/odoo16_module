@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <data noupdate="1">
+        <!-- cron job of first emailer -->
+        <record id="budget_issues_feedback" model="ir.cron">
+            <field name="name">Budget Issues feedback</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model._budget_issues_feedback_cron()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="False" />
+        </record>
+
+        <record id="budget_issues_feed_id" model="mail.template">
+                <field name="name">Budget Issues feedback Custom Template</field>
+                <field name="model_id" ref="base.model_res_partner"/>
+                <field name="email_to">{{object.email}}</field>
+                <field name="email_from">support@technians.com</field>
+                <field name="subject">{{object.name}}, Your Perspective Matters! So share your thoughts!</field>
+                <field name="auto_delete" eval="False"/>
+                <field name="body_html"><![CDATA[
+                    <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding: 0px;">
+                                    <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: center;padding:0;padding: 120px 0px;color:#fff;background:#1594b4;" colspan="3">
+                                                    <img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png"
+                                                        style="width:200px" />
+                                                        <div>
+                                                            <img src="https://dev.technians.com/shared/technians-email-templates/images/greeting-text.png" alt="" style="width: 60%;"/>
+                                                        </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+
+                                            <td style="padding:30px 30px 0;background-color:#ffffff;" colspan="3">
+
+                                                <!-- <h1
+                                                    style="margin-top:0;font-size:26px;font-family: 'DM Serif Display', serif;letter-spacing: 0px;text-align: center;color: #1595b4;">
+                                                    We&#39;re So Happy You Reached Out To Us!</h1> -->
+
+
+
+                                                <p style="color:#000;font-size: 18px;font-family: 'Verdana', sans-serif;">Hi <b>  <t t-out="object.name"/> </b>,</p>
+                                                <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">
+
+
+        I hope this email finds you well.
+
+
+          </p>
+        <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">
+
+        We wanted to reach out and know your thoughts on the current estimates.
+
+
+         </p>
+        <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">
+
+
+        It is valuable for us to be aware of your thoughts, as your satisfaction is our priority.
+
+         </p>
+         <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">
+
+
+        Your feedback matters!
+
+
+         </p>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" height="30"></td>
+                                        </tr>
+                                        <tr style="background-color: #1594b4;">
+                                            <td colspan="3" style="padding-bottom: 3px;padding: 20px 120px;text-align: center;font-size: 18px;">
+                                                <p style="color: #fff;">A Premier Digital Marketing &amp; TechnologyAgency Fueled with Creativity &amp; Performance to <strong> #TellYourStory</strong></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #f5f5f5;padding: 0px;" height="35" colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 16.15%;padding: 0px;">
+                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/bgl.png" alt="" style="width: 100%"/>
+                                            </td>
+                                            <td style="width: 64.5%;padding: 0px;">
+                                                <a href="#">
+                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/share (1).png" alt="" style="width: 100%"/>
+                                                </a>
+                                            </td>
+                                            <td style="width: 16%;padding: 0px;">
+                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/bgr.png" alt="" style="width: 100%"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;padding-top: 25px; background: #f5f5f5;" colspan="3">
+                                                <a t-att-href="'{{web.base.url}}/helpdesk-support-ticket'" style="background: #fcc626;
+                                                padding: 25px 50px;
+                                                color: #292929;
+                                                text-decoration: none;
+                                                font-size: 28px;
+                                                font-family: 'Verdana', sans-serif;
+                                                display: inline-block;
+                                                margin-top: 20px;
+                                                border-radius: 34px;
+                                                border: 5px solid #fff;
+                                                box-shadow: 0 0 15px #00000026;
+                                                font-weight: 600;">Open Helpdesk Support Ticket</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <h3
+                                                    style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" alt="" style="width: 100%;"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <p style="font-size: 17px;
+                                                font-weight: 700;
+                                                font-family: 'Verdana', sans-serif;
+                                                text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span> and trusted partner for:</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <a href="#"><img style="width: 100%;" src="https://stag.technians.com/wp-content/uploads/2023/04/Client-emailer-1.jpg" alt=""/></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    ]]>
+                </field>
+        </record>
+
+
+
+
+            <!-- first email template -->
+<!--            <record id="budget_issues_feed" model="mail.template">-->
+<!--                <field name="name">Budget Issues feedback </field>-->
+<!--                <field name="model_id" ref="base.model_res_partner"/>-->
+<!--                <field name="email_to">{{object.email}}</field>-->
+<!--                <field name="email_from">support@technians.com</field>-->
+<!--                <field name="subject">{{object.name}}, Your Perspective Matters! So share your thoughts!</field>-->
+<!--                <field name="auto_delete" eval="False"/>-->
+<!--                <field name="body_html"><![CDATA[-->
+<!--                <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">-->
+<!--                    <tbody>-->
+<!--                        <tr>-->
+<!--                            <td align="center" style="padding: 0px;">-->
+<!--                                <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">-->
+<!--                                    <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <td style="text-align: center;padding:0;padding: 120px 0px;color:#fff;background:#1594b4;" colspan="3">-->
+<!--                                                <img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png"-->
+<!--                                                    style="width:200px" />-->
+<!--                                                    <div>-->
+<!--                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/greeting-text.png" alt="" style="width: 60%;"/>-->
+<!--                                                    </div>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td style="padding:30px 30px 0;background-color:#ffffff;" colspan="3">-->
+<!--                                                <p style="color:#000;font-size: 18px;font-family: 'Verdana', sans-serif;">Hi <b>  <t t-out="object.name"/> </b>,</p>-->
+<!--                                                <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">I hope this email finds you well.</p>-->
+<!--                                                <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">-->
+<!--                                                    We wanted to reach out and know your thoughts on the current estimates.-->
+<!--                                                </p>-->
+<!--                                                <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">-->
+<!--                                                    It is valuable for us to be aware of your thoughts, as your satisfaction is our priority.-->
+<!--                                                </p>-->
+<!--                                                <p style="margin-top: 20px;margin-bottom: 0px;color:#000;line-height: 25px;font-size: 18px;font-family: 'Verdana', sans-serif;">-->
+<!--                                                    Your feedback matters!-->
+<!--                                                </p>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr><td colspan="3" height="30"></td></tr>-->
+<!--                                        <tr style="background-color: #1594b4;">-->
+<!--                                            <td colspan="3" style="padding-bottom: 3px;padding: 20px 120px;text-align: center;font-size: 18px;">-->
+<!--                                                <p style="color: #fff;">A Premier Digital Marketing &amp; TechnologyAgency Fueled with Creativity &amp; Performance to <strong> #TellYourStory</strong></p>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr><td style="background: #f5f5f5;padding: 0px;" height="35" colspan="3"></td></tr>-->
+<!--                                        <tr>-->
+<!--                                            <td style="width: 16.15%;padding: 0px;">-->
+<!--                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/bgl.png" alt="" style="width: 100%"/>-->
+<!--                                            </td>-->
+<!--                                            <td style="width: 64.5%;padding: 0px;">-->
+<!--                                                <a href="#">-->
+<!--                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/share (1).png" alt="" style="width: 100%"/>-->
+<!--                                                </a>-->
+<!--                                            </td>-->
+<!--                                            <td style="width: 16%;padding: 0px;">-->
+<!--                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/bgr.png" alt="" style="width: 100%"/>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--&lt;!&ndash;                                        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <td style="text-align: center;padding-top: 25px; background: #f5f5f5;" colspan="3">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <a t-att-href="'{{web.base.url}}/helpdesk-support-ticket'" style="background: #fcc626;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                padding: 25px 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                color: #292929;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-size: 28px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-family: 'Verdana', sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                display: inline-block;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                margin-top: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                border-radius: 34px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                border: 5px solid #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                box-shadow: 0 0 15px #00000026;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-weight: 600;">Open Helpdesk Support Ticket</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        </tr>&ndash;&gt;-->
+
+<!--                                        &lt;!&ndash; <tr>-->
+<!--&lt;!&ndash;                                            <td style="text-align: center;padding-top: 25px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                            background: #f5f5f5;" colspan="3">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                <a href="{{web.base.url}}/helpdesk-support-ticket" style="background: #fcc626;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                padding: 25px 50px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                color: #292929;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                text-decoration: none;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-size: 28px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-family: 'Verdana', sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                display: inline-block;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                margin-top: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                border-radius: 34px;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                border: 5px solid #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                box-shadow: 0 0 15px #00000026;&ndash;&gt;-->
+<!--&lt;!&ndash;                                                font-weight: 600;">Share Your Valuable Feedback</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                                            </td>&ndash;&gt;-->
+<!--                                        </tr> &ndash;&gt;-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <h3-->
+<!--                                                    style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" alt="" style="width: 100%;"/>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <p style="font-size: 17px;-->
+<!--                                                font-weight: 700;-->
+<!--                                                font-family: 'Verdana', sans-serif;-->
+<!--                                                text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span> and trusted partner for:</p>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <a href="#"><img style="width: 100%;" src="https://stag.technians.com/wp-content/uploads/2023/04/Client-emailer-1.jpg" alt=""/></a>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        &lt;!&ndash; <tr>-->
+<!--                                            <td style="background-color:#ffffff;text-align: center;padding: 0px 10px;">-->
+<!--                                                <center>-->
+<!--                                                    <table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%;">-->
+<!--                                                        <tbody>-->
+<!--                                                            <tr>-->
+<!--                                                                <td align="center">-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                            <tbody>-->
+<!--                                                                                <tr>-->
+<!--                                                                                    <td valign="bottom">-->
+<!--                                                                                        <div>-->
+<!--                                                                                                <img src="https://technians.com/wp-content/uploads/2021/09/Campus.jpg" alt="icon" border="0" width="100px" height="80px"/>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </td>-->
+<!--                                                                                </tr>-->
+<!--                                                                            </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/roland-img.png" alt="icon" border="0" width="100px" height="100px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://technians.com/wp-content/uploads/2023/03/Ananda-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                            <img src="https://technians.com/wp-content/uploads/2021/09/Vivo.jpg" alt="icon" border="0" width="100px" height="90px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://technians.com/wp-content/uploads/2017/05/hpe_edit.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://technians.com/wp-content/uploads/2021/09/Oyo-Rooms-Logo.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </center>-->
+<!--                                                <center>-->
+<!--                                                    <table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%;">-->
+<!--                                                        <tbody>-->
+<!--                                                            <tr>-->
+<!--                                                                <td align="center">-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                            <tbody>-->
+<!--                                                                                <tr>-->
+<!--                                                                                    <td valign="bottom">-->
+<!--                                                                                        <div>-->
+<!--                                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/shein-img.png" alt="icon" border="0" width="100px" height="80px"/>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </td>-->
+<!--                                                                                </tr>-->
+<!--                                                                            </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://technians.com/wp-content/uploads/2021/11/faces-canada-new.webp" alt="icon" border="0" width="100px" height="100px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/triveni-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                            <img src="https://technians.com/wp-content/uploads/2023/02/Artboard-22.png" alt="icon" border="0" width="100px" height="90px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/apollo-fiege-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/housing-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </center>-->
+<!--                                                <center>-->
+<!--                                                    <table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%;">-->
+<!--                                                        <tbody>-->
+<!--                                                            <tr>-->
+<!--                                                                <td align="center">-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                            <tbody>-->
+<!--                                                                                <tr>-->
+<!--                                                                                    <td valign="bottom">-->
+<!--                                                                                        <div>-->
+<!--                                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/lime-road-img.png" alt="icon" border="0" width="100px" height="80px"/>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </td>-->
+<!--                                                                                </tr>-->
+<!--                                                                            </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/max-healthcare-img.png" alt="icon" border="0" width="100px" height="100px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/marvel-tea-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/hitachi-img.png" alt="icon" border="0" width="100px" height="90px"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/jindal-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="left" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                        <tbody>-->
+<!--                                                                            <tr>-->
+<!--                                                                                <td valign="bottom">-->
+<!--                                                                                    <div>-->
+<!--                                                                                        <img src="https://dev.technians.com/shared/technians-email-templates/images/firmenich-img.png" alt="icon" border="0" width="100px" height="100%"/>-->
+<!--                                                                                    </div>-->
+<!--                                                                                </td>-->
+<!--                                                                            </tr>-->
+<!--                                                                        </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </center>-->
+<!--                                                <center>-->
+<!--                                                    <table cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" align="center" style="width: 100%;">-->
+<!--                                                        <tbody>-->
+<!--                                                            <tr>-->
+<!--                                                                <td align="center">-->
+<!--                                                                    <div>-->
+<!--                                                                        <table width="16.66%" align="center" cellpadding="0" cellspacing="0" border="0" class="article">-->
+<!--                                                                            <tbody>-->
+<!--                                                                                <tr>-->
+<!--                                                                                    <td valign="bottom">-->
+<!--                                                                                        <div>-->
+<!--                                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/jivo-img.png" alt="icon" border="0" width="100px" height="80px"/>-->
+<!--                                                                                        </div>-->
+<!--                                                                                    </td>-->
+<!--                                                                                </tr>-->
+<!--                                                                            </tbody>-->
+<!--                                                                        </table>-->
+<!--                                                                    </div>-->
+
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                                </center>-->
+<!--                                            </td>-->
+
+<!--                                        </tr> &ndash;&gt;-->
+
+<!--                                        &lt;!&ndash; <tr>-->
+
+<!--                                            <td style="padding:25px 15px;background-color:#1bb7d0;">-->
+
+<!--                                                    <p style="margin:0 0 8px 0;text-align: center;">-->
+<!--                                                        <a href="https://bit.ly/Facebook-Technians" style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                            <img alt="facebook" height="40" src="https://technians.com/wp-content/uploads/2023/03/fb-1.png" width="40"/>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="https://bit.ly/technians-instagram" style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                            <img alt="instagram" height="40" src="https://technians.com/wp-content/uploads/2023/03/insta.png" width="40"/>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="https://bit.ly/Linkedin-Technians" style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                            <img alt="twitter" height="40" src="https://technians.com/wp-content/uploads/2023/03/linkedin-3.png" width="40"/>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="https://bit.ly/Twitter-Technians " style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                            <img alt="linkedin" height="40" src="https://technians.com/wp-content/uploads/2023/03/twitter-1.png" width="40"/>-->
+<!--                                                        </a>-->
+<!--                                                        <a href="https://bit.ly/AskMobile-Technians" style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                            <img alt="linkedin" height="40" src="https://technians.com/wp-content/uploads/2023/03/weblink.png" width="40"/>-->
+<!--                                                        </a>-->
+<!--                                                    </p>-->
+<!--                                                &lt;!&ndash; <p style="margin:0 0 8px 0;"><a href="https://bit.ly/Facebook-Technians"-->
+<!--                                                        style="margin-right: 8px;text-decoration: none;"><img alt="facebook"-->
+<!--                                                            height="40"-->
+<!--                                                            src="https://technians.com/wp-content/uploads/2022/06/m-fb.png"-->
+<!--                                                            width="40" /> </a> <a href="https://bit.ly/Instagram-Technians"-->
+<!--                                                        style="margin-right: 8px;text-decoration: none;"> <img alt="instagram"-->
+<!--                                                            height="40"-->
+<!--                                                            src="https://technians.com/wp-content/uploads/2022/06/m-insta.png"-->
+<!--                                                            width="40" /> </a> <a href="https://bit.ly/Twitter-Technians"-->
+<!--                                                        style="margin-right: 8px;text-decoration: none;"> <img alt="twitter"-->
+<!--                                                            height="40"-->
+<!--                                                            src="https://technians.com/wp-content/uploads/2022/06/m-twitter.png"-->
+<!--                                                            width="40" /> </a> <a href="https://bit.ly/Linkedin-Technians"-->
+<!--                                                        style="margin-right: 8px;text-decoration: none;"> <img alt="linkedin"-->
+<!--                                                            height="40"-->
+<!--                                                            src="https://technians.com/wp-content/uploads/2022/06/m-linkedin.png"-->
+<!--                                                            width="40" /> </a></p> &ndash;&gt;-->
+<!--                                                    &lt;!&ndash;<table>-->
+<!--                                                        <tbody>-->
+<!--                                                            <tr>-->
+<!--                                                                <td style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">-->
+<!--                                                                    <h3 style="margin-bottom: 5px;">Gurgaon</h3>-->
+<!--                                                                    <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">B-18, Ground Floor, Institutional Area, Sector 32, Gurgaon, Haryana, 122003, India</p>-->
+<!--                                                                </td>-->
+<!--                                                                <td>-->
+<!--                                                                    <div style="background: #fff;border-radius: 100%;width: 4px;height: 130px;margin-top: 20px;"></div>-->
+<!--                                                                </td>-->
+<!--                                                                <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                                    <h3 style="margin-bottom: 5px;margin-top: 0px;">Delhi</h3>-->
+<!--                                                                    <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">E - 24, Lajpat Nagar-III, Delhi, 110024, India</p>-->
+<!--                                                                </td>-->
+<!--                                                                <td>-->
+<!--                                                                    <div style="background: #fff;border-radius: 100%;width: 4px;height: 130px;margin-top: 20px;"></div>-->
+<!--                                                                </td>-->
+<!--                                                                <td style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">-->
+<!--                                                                    <h3 style="margin-bottom: 5px;">Mumbai</h3>-->
+<!--                                                                    <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">K. Raheja Platinum, Sag Baug Rd off Andheri-Kurla Rd, Marol Andheri East, Mumbai, MH 400059</p>-->
+<!--                                                                </td>-->
+<!--                                                                <td>-->
+<!--                                                                    <div style="background: #fff;border-radius: 100%;width: 4px;height: 130px;margin-top: 20px;"></div>-->
+<!--                                                                </td>-->
+<!--                                                                <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                                    <h3 style="margin-bottom: 5px;">Bengaluru</h3>-->
+<!--                                                                    <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">Prestige Atlanta, 80 Feet Rd, Koramangala 1A Block, Bengaluru, KA, 560034</p>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </tbody>-->
+<!--                                                    </table>-->
+<!--                                            </td>-->
+
+<!--                                        </tr> &ndash;&gt;-->
+
+<!--                                        <tr>-->
+
+<!--                                            <td style="padding:25px 15px 0;background-color:#18aec9;" colspan="3">-->
+
+
+<!--                                                <table>-->
+<!--                                                    <tbody>-->
+<!--                                                        <tr>-->
+<!--                                                            <td-->
+<!--                                                                style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/gurugram.png" alt="gurugram" style="width: 55px;"/>-->
+<!--                                                                <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                                padding-top: 10px;">Gurgaon</h3>-->
+<!--                                                                &lt;!&ndash; <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">B-18, Ground Floor, Institutional Area, Sector 32, Gurgaon, Haryana, 122003, India</p> &ndash;&gt;-->
+<!--                                                            </td>-->
+<!--                                                            <td>-->
+<!--                                                                &lt;!&ndash; <div style="background: #fff;border-radius: 100%;width: 4px;height: 50px;"></div> &ndash;&gt;-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/border (1).png"-->
+<!--                                                                    alt="" style="float: left;"/>-->
+<!--                                                            </td>-->
+<!--                                                            <td-->
+<!--                                                                style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/delhi.png" alt="delhi" style="width: 55px;"/>-->
+<!--                                                                <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                                padding-top: 10px;">Delhi</h3>-->
+<!--                                                                &lt;!&ndash; <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">E - 24, Lajpat Nagar-III, Delhi, 110024, India</p> &ndash;&gt;-->
+<!--                                                            </td>-->
+<!--                                                            <td>-->
+<!--                                                                &lt;!&ndash; <div style="background: #fff;border-radius: 100%;width: 4px;height: 50px;"></div> &ndash;&gt;-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/border (1).png"-->
+<!--                                                                    alt="" style="float: left;"/>-->
+<!--                                                            </td>-->
+<!--                                                            <td-->
+<!--                                                                style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/mumbai.png" alt="mumbai" style="width: 55px;"/>-->
+<!--                                                                <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                                padding-top: 10px;">Mumbai</h3>-->
+<!--                                                                &lt;!&ndash; <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">K. Raheja Platinum, Sag Baug Rd off Andheri-Kurla Rd, Marol Andheri East, Mumbai, MH 400059</p> &ndash;&gt;-->
+<!--                                                            </td>-->
+<!--                                                            <td>-->
+<!--                                                                &lt;!&ndash; <div style="background: #fff;border-radius: 100%;width: 4px;height: 50px;"></div> &ndash;&gt;-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/border (1).png"-->
+<!--                                                                    alt="" style="float: left;"/>-->
+<!--                                                            </td>-->
+<!--                                                            <td-->
+<!--                                                                style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">-->
+<!--                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/bangaluru.png" alt="bangaluru" style="width: 55px;"/>-->
+<!--                                                                <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;-->
+<!--                                                                padding-top: 10px;">Bengaluru</h3>-->
+<!--                                                                &lt;!&ndash; <p style="margin-top: 10px;font-size: 12px;line-height: 20px;">Prestige Atlanta, 80 Feet Rd, Koramangala 1A Block, Bengaluru, KA, 560034</p> &ndash;&gt;-->
+<!--                                                            </td>-->
+<!--                                                        </tr>-->
+<!--                                                        <tr>-->
+<!--                                                            <td colspan="8" style="background-color: #18aec9;height: 20px;"></td>-->
+<!--                                                        </tr>-->
+<!--                                                    </tbody>-->
+<!--                                                </table>-->
+<!--                                            </td>-->
+
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <p class="social" style="margin: 0;text-align: center;padding: 15px 0 0;">-->
+<!--                                                    <a href="https://bit.ly/Facebook-Technians"-->
+<!--                                                        style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                        <img alt="facebook" height="30"-->
+<!--                                                            src="https://dev.technians.com/shared/technians-email-templates/images/fb%20(2).png"-->
+<!--                                                            width="30"/>-->
+<!--                                                    </a>-->
+<!--                                                    <a href="https://bit.ly/Twitter-Technians "-->
+<!--                                                        style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                        <img alt="linkedin" height="30"-->
+<!--                                                            src="https://dev.technians.com/shared/technians-email-templates/images/twitter (2).png"-->
+<!--                                                            width="30"/>-->
+<!--                                                    </a>-->
+<!--                                                    <a href="https://bit.ly/technians-instagram"-->
+<!--                                                        style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                        <img alt="instagram" height="30"-->
+<!--                                                            src="https://dev.technians.com/shared/technians-email-templates/images/insta (1).png"-->
+<!--                                                            width="30"/>-->
+<!--                                                    </a>-->
+<!--                                                    <a href="https://bit.ly/Linkedin-Technians"-->
+<!--                                                        style="margin-right: 0px;text-decoration: none;    display: inline-block;">-->
+<!--                                                        <img alt="twitter" height="30"-->
+<!--                                                            src="https://dev.technians.com/shared/technians-email-templates/images/linkedin (4).png"-->
+<!--                                                            width="30"/>-->
+<!--                                                    </a>-->
+
+<!--                                                </p>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr style="background-color: #fff;">-->
+<!--                                            <td colspan="3" style="padding: 20px 50px;">-->
+<!--                                                <table>-->
+<!--                                                    <tbody>-->
+<!--                                                        <tr>-->
+<!--                                                            <td>-->
+<!--                                                                <table>-->
+<!--                                                                    <tbody>-->
+<!--                                                                        <tr>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/saless.png" alt="" style="width: 102%;float: left;"/>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <a href="tel:9899920599">-->
+<!--                                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/phone (2).png" alt="" style="width: 103%;float: left;"/>-->
+<!--                                                                                </a>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <a href="https://wa.me/919899920599?text=">-->
+<!--                                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/whatsapp (1).png" alt="" style="width: 103%;float: left;"/>-->
+<!--                                                                                </a>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/salesnumber.png" alt="" style="width: 100%;float: left;"/>-->
+<!--                                                                            </td>-->
+<!--                                                                        </tr>-->
+<!--                                                                    </tbody>-->
+<!--                                                                </table>-->
+<!--                                                            </td>-->
+<!--                                                            &lt;!&ndash; <td style="width: 50%;padding: 15px 5px 0;">-->
+<!--                                                                <a href="#">-->
+<!--                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/sales.png" alt="" style="width: 100%;"/>-->
+<!--                                                                </a>-->
+<!--                                                            </td> &ndash;&gt;-->
+<!--                                                            &lt;!&ndash; <td style="width: 50%;padding: 15px 5px 0;">-->
+<!--                                                                <a href="#">-->
+<!--                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/hr.png" alt="" style="width: 100%;"/>-->
+<!--                                                                </a>-->
+<!--                                                            </td>  &ndash;&gt;-->
+<!--                                                            <td>-->
+<!--                                                                <table>-->
+<!--                                                                    <tbody>-->
+<!--                                                                        <tr>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-mailer.png" alt="" style="width: 102%;float: left;"/>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <a href="tel:9899920599">-->
+<!--                                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/phone (2).png" alt="" style="width: 106%;float: left;"/>-->
+<!--                                                                                </a>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <a href="https://wa.me/919899885476?text=">-->
+<!--                                                                                    <img src="https://dev.technians.com/shared/technians-email-templates/images/whatsapp (1).png" alt="" style="width: 103%;float: left;"/>-->
+<!--                                                                                </a>-->
+<!--                                                                            </td>-->
+<!--                                                                            <td style="padding: 0px;">-->
+<!--                                                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/hr-number.png" alt="" style="width: 100%;float: left;"/>-->
+<!--                                                                            </td>-->
+<!--                                                                        </tr>-->
+<!--                                                                    </tbody>-->
+<!--                                                                </table>-->
+<!--                                                            </td>-->
+<!--                                                        </tr>-->
+<!--                                                    </tbody>-->
+<!--                                                </table>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="3">-->
+<!--                                                <img src="https://dev.technians.com/shared/technians-email-templates/images/footer.png" alt="" style="width: 100%;float: left;"/>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+
+<!--                                    </tbody>-->
+
+<!--                                </table>-->
+
+<!--                            </td>-->
+
+<!--                        </tr>-->
+
+<!--                    </tbody>-->
+
+<!--                </table>-->
+<!--                ]]>-->
+
+<!--                </field>-->
+<!--            </record>-->
+
+
+    </data>
+</odoo> 

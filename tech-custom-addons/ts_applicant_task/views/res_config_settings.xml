@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="applicant_res_config_settings_form" model="ir.ui.view">
+        <field name="name">applicant.res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_recruitment.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='hr_recruitment']" position="inside">
+                <h2>Applicant</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="content-group">
+                        <div class="mt16">
+                            <field name="project_id" domain="[('active', '=', True)]"/>
+                        </div>
+                    </div>
+                    <div class="text-muted">
+                        Select Project for Tasks in Jobs
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

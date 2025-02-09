@@ -1,0 +1,192 @@
+<odoo>
+	<!--MAIN FORM VIEW OF SUBSCRIPTION LIST-->
+	<record id="subscription_form_view_line_id" model="ir.ui.view">
+        <field name="name">subscription.line.form</field>
+        <field name="model">subscription.line</field>
+        <field name="arch" type="xml">
+            <form
+                create="false"
+                edit="false"
+                delete="false"
+                duplicate="false">
+                <sheet>
+                    <field name="sequence" invisible="1"/>
+                    <field name="product_uom_category_id" invisible="1"/>
+                    <field name="product_subscription_intervals" invisible="1" />
+                    <group>
+                        <group>
+                            <field name="partner_id" />
+                            <field name="product_id" widget="many2one_barcode" />
+                            <field name="price_total" invisible="1"/>
+                            <field name="price_tax" invisible="1"/>
+                            <field name="price_subtotal" invisible="1"/>
+                            <label for="quantity"/>
+                            <div class="o_row" name="ordered_qty">
+                                <field
+                                    context="{'partner_id':parent.partner_id, 'quantity':quantity, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                    name="quantity"/>
+                                <field name="product_uom" invisible="1" groups="!uom.group_uom"/>
+                                <field
+                                    name="product_uom"
+                                    force_save="1"
+                                    groups="uom.group_uom"
+                                    class="oe_no_button"
+                                />
+                            </div>
+                            <field name="price_unit"/>
+                            <field name="tax_id" widget="many2many_tags" options="{'no_create': True}" context="{'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','sale'), ('company_id','=',parent.company_id), ('country_id', '=', parent.tax_country_id)]" />
+                            <label for="discount" groups="product.group_discount_per_so_line"/>
+                            <div name="discount" groups="product.group_discount_per_so_line">
+                                <field name="discount" class="oe_inline"/> %
+                            </div>
+                            <field name="sequence" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="subscription_interval" />
+                            <field name="duration_cycle" />
+                            <field name="duration_cycle_count" attrs="{'invisible': [('duration_cycle','=','unlimited')]}" />
+                            <field name="date_start" />
+                            <field name="date_end" attrs="{'invisible':[('duration_cycle','=','unlimited')]}" />
+                            <field name="recurring_next_date" attrs="{'invisible': [('state', '!=', 'in_progress')]}" />
+                            <field name="state" invisible="1" />
+                        </group>
+                    </group>
+                    <label for="name" string="Description"/>
+                    <label for="name" string="Section Name (eg. Products, Services)"/>
+                    <label for="name" string="Note"/>
+                    <field name="name"/>
+                    <field name="state" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+	<!-- TREE VIEW OF SUBSCRIPTION LIST-->
+	<record id="subscription_tree_view_line_id" model="ir.ui.view">
+        <field name="name">subscription.line.tree</field>
+        <field name="model">subscription.line</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-muted="state == 'closed'" decoration-success="state == 'in_progress'" decoration-warning="state == 'hold'"
+                create="false"
+                edit="false"
+                delete="false"
+                duplicate="false">
+                <field name="product_uom_category_id" invisible="1"/>
+                <field name="product_subscription_intervals" invisible="1" />
+
+                <field name="partner_id" />
+                <field
+                    name="product_id"
+                    force_save="1"
+                    context="{
+                        'partner_id': parent.partner_id,
+                        'quantity': quantity,
+                        'pricelist': parent.pricelist_id,
+                        'uom':product_uom,
+                        'company_id': parent.company_id,
+                        'default_lst_price': price_unit,
+                        'default_description_sale': name
+                    }"
+                    options="{
+                        'no_open': True,
+                    }"
+                    domain="[('is_subscription', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                    widget="sol_product_many2one"
+                />
+                <field name="product_template_id"
+                    string="Product"
+                    invisible="1"
+                    context="{
+                        'partner_id': parent.partner_id,
+                        'quantity': quantity,
+                        'pricelist': parent.pricelist_id,
+                        'uom':product_uom,
+                        'company_id': parent.company_id,
+                        'default_list_price': price_unit,
+                        'default_description_sale': name
+                    }"
+                    options="{
+                        'no_open': True,
+                    }"
+                    domain="[('is_subscription', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                    widget="sol_product_many2one"/>
+                <field name="name" widget="section_and_note_text" optional="show"/>
+                <field name="duration_cycle" invisible="1" />
+                <field name="subscription_interval" />
+                <field name="date_start" />
+                <field name="date_end" attrs="{'invisible':[('duration_cycle','=','unlimited')]}" />
+                <field name="recurring_next_date" attrs="{'invisible': [('state', '!=', 'in_progress')]}" />
+                <field
+                    name="quantity"
+                    context="{
+                        'partner_id': parent.partner_id,
+                        'quantity': quantity,
+                        'pricelist': parent.pricelist_id,
+                        'uom': product_uom,
+                        'company_id': parent.company_id
+                    }"
+                />
+                <field name="product_uom" invisible="1" groups="!uom.group_uom"/>
+                <field
+                    name="product_uom"
+                    force_save="1"
+                    string="UoM"
+                    context="{'company_id': parent.company_id}"
+                    groups="uom.group_uom"
+                    options='{"no_open": True}'
+                    optional="show"
+                />
+                <field
+                    name="price_unit"
+                />
+                <field
+                    name="tax_id"
+                    widget="many2many_tags"
+                    options="{'no_create': True}"
+                    domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                    context="{'active_test': True}"
+                    optional="show"
+                />
+                <field name="discount" string="Disc.%" groups="product.group_discount_per_so_line" optional="show" widget="sol_discount"/>
+                <field name="price_subtotal" widget="monetary" groups="account.group_show_line_subtotals_tax_excluded" />
+                <field name="price_total" widget="monetary" groups="account.group_show_line_subtotals_tax_included" />
+                <field name="state" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="price_tax" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+
+                <button name="action_start_subscription" type="object" string="Start" states="draft,hold,closed" context="{'with_button': True}" icon="fa-play" />
+                <button name="action_hold_subscription" type="object" string="Hold" states="in_progress" icon="fa-pause" />
+                <button name="action_close_subscription" type="object" string="Close" states="in_progress" icon="fa-times" />
+            </tree>
+        </field>
+    </record>
+    <!--SEARCH view-->
+    <record id="subscription_line_search_view" model="ir.ui.view">
+        <field name="name">subscription.line.search</field>
+        <field name="model">subscription.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="subscription_interval" />
+                <field name="date_start" />
+                <group expand="0" string="Group By...">
+                    <filter string="Customer" name="group_by_partner" context="{'group_by':'partner_id'}" />
+                    <filter string="Product" name="group_by_product" context="{'group_by':'product_id'}" />
+                    <filter string="Next Order Date" name="group_by_date" context="{'group_by':'recurring_next_date'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <!--SUBSCRIPTION LINE ACTION -->
+    <record id="action_subscription_line_id" model="ir.actions.act_window">
+        <field name="name">Subscription Lines</field>
+        <field name="res_model">subscription.line</field>
+        <field name="search_view_id" ref="subscription_line_search_view" />
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="subscription_tree_view_line_id" />
+    </record>
+    <menuitem id="submenu_subscription_line_id" parent="menu_subscription" action="action_subscription_line_id" sequence="2" />
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="job_applicant_form_view">
+            <field name="name">Lead applicant</field>
+            <field name="model">applicant.job.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Tips Info">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="crm_id" readonly="True" invisible="1"/>
+                                <field name="name" readonly="True"/>
+                                <field name="subject" readonly="True"/>
+                                <field name="email_from" readonly="True"/>
+                                <field name="phone" readonly="True"/>
+<!--                                <field name="email" readonly="True"/>-->
+                            </group>
+                        </group>
+
+                    </sheet>
+                    <footer>
+                        <button name="create_applicant" type="object" string="create applicant" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

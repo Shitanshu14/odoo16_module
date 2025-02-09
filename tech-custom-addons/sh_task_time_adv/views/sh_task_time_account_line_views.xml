@@ -1,0 +1,42 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sh_project_task_time_account_line_form_view" model="ir.ui.view">
+        <field name="name">sh.task.time.account.line</field>
+        <field name="model">sh.task.time.account.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                   <group>
+                    <group>
+                            <field name="desc_option_id" string="Select an Option"/>
+                            <field name="name" placeholder="e.g. Client Feedbacks incorporated in Banner" string="Describe what you've done"/>
+                        </group>   
+                 </group>
+                    
+             <group>
+                <group>
+                    <field name="start_date" string="Start Time"/>
+                        <field name="call_on" widget="float_time" />
+                        <!-- <field name="manual_duration" string="Enter Duration in Minutes"/><separator string="Duration Entered Here Will Adjust The Start Time" attrs="{'invisible':[('manual_duration', '=', False)]}"/> -->
+                        <!-- <field name="minute_count" attrs="{'invisible':[('manual_duration', '=', False)]}"/> -->
+                        <field name="task_id" invisible="1"/>
+                        <!-- <separator string="Duration Entered Here Will Adjust The Start Time" attrs="{'invisible':[('manual_duration', '=', False)]}"/> -->
+                        <!-- <field name="minute_count" attrs="{'invisible':[('manual_duration', '=', False)]}"/> -->
+                        <!-- <field name="task_id" invisible="1"/> -->
+                </group>
+                      
+                <group>
+                <field name="end_date" string="End Time"/>
+                </group>
+   
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Stop Timer" name="end_task" type="object" default_focus="1" class="btn-primary" />
+                    <button string="Stop Timer &amp; Mark Done" name="action_mark_done_task" type="object" default_focus="1" class="btn-primary" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

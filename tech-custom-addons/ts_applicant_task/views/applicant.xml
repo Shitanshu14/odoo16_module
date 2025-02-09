@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <record id="hr_applicant_task_send_button" model="ir.ui.view">-->
+<!--        <field name="name">hr.applicant.task.button</field>-->
+<!--        <field name="model">hr.applicant</field>-->
+<!--        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="/form//header" position="inside">-->
+<!--                <button class="btn btn-primary" name="send_task_wizard" type="object"-->
+<!--                        groups="hr_recruitment.group_hr_recruitment_user">-->
+<!--                    Send Task-->
+<!--                </button>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record id="view_applicant_task_wizard" model="ir.ui.view">
+        <field name="name">Send Task to Applicant</field>
+        <field name="model">applicant.task.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <group>-->
+<!--                    <group>-->
+<!--                         <field name="applicant_id" options="{'no_create': True}" readonly="True"/>-->
+<!--                    </group>-->
+                    <h1 class="d-flex flex-row">
+                            <field name="applicant_id" class="o_text_overflow" readonly="True"/>
+                        </h1>
+<!--                </group>-->
+                <group>
+                    <group>
+                        <field name="name" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="days" attrs="{'invisible':[('name', '=', False)]}"/>
+                        <field name="deadline" invisible="True"/>
+                    </group>
+<!--                    <group string="Task Description">-->
+<!--                    </group>-->
+                    <field name="description" invisible="True"/>
+                    <group string="Subject" attrs="{'invisible':[('name', '=', False)]}">
+                    </group>
+                    <field name="email_subject" type="html" attrs="{'invisible':[('name', '=', False)]}"/>
+                    <group string="Email" attrs="{'invisible':[('name', '=', False)]}">
+                    </group>
+                    <field name="email_content" type="html" attrs="{'invisible':[('name', '=', False)]}"/>
+                    <group string="Attachments" attrs="{'invisible':[('name', '=', False)]}">
+                    </group>
+                    <field name="attachment_ids"
+                           widget="many2many_binary"
+                           attrs="{'invisible':[('name', '=', False)]}"
+                           nolabel="1" colspan="2"/>
+                </group>
+
+                <footer>
+                    <button name="send_task"
+                            class="btn btn-primary" type="object"
+                            string="Send">
+                    </button>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_applicant_task_wizard_views" model="ir.actions.act_window">
+        <field name="name">applicant.task.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">applicant.task.wizard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_task_wizard"/>
+    </record>
+
+
+    <record id="send_task_to_applicant" model="ir.actions.server">
+        <field name="name">Send Task to Applicant</field>
+        <field name="model_id" ref="model_hr_applicant"/>
+        <field name="binding_model_id" ref="model_hr_applicant"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.send_task_wizard()
+        </field>
+    </record>
+
+
+</odoo>

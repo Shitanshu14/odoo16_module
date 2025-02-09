@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<record id="view_hr_job_form_inherit" model="ir.ui.view">
+    <field name="name">hr.job.form.inherit</field>
+    <field name="model">hr.job</field>
+    <field name="inherit_id" ref="hr.view_hr_job_form"/> <!-- Inherit the base form view -->
+    <field name="arch" type="xml">
+        <xpath expr="//form/sheet" position="inside">
+            <group>
+                <field name="website_job_id"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+</data>
+</odoo>

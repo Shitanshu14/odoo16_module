@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+<!-- Scheduled action for project updates -->
+<record id="reminder_cron_project_not_updated" model="ir.cron">
+            <field name="name">Project not Up to date</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_project_not_updated()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+</record>
+
+<record id="reminder_cron_project_weekly_updates" model="ir.cron">
+            <field name="name">Project Weekly Updates</field>
+            <field name="model_id" ref="project.model_project_project"/>
+            <field name="state">code</field>
+            <field name="code">model.reminder_cron_project_weekly_updates()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+</record>
+</data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_user,Project Team User ,model_project_team_technians,project.group_project_user,1,0,0,0
+access_project_manager,Project Team Administrator ,model_project_team_technians,project.group_project_manager,1,1,1,0
+access_project_administrator_user,Project Admin Res User,base.model_res_users,project.group_project_manager,1,1,1,0
+access_project_team_manager_project,Project Team Manager ,model_project_project,project_team_technians.tech_group_pt_manager,1,1,0,0
+access_project_team_manager_team,Project Team Manager ,model_project_team_technians,project_team_technians.tech_group_pt_manager,1,1,1,1
+access_administrator_team,Administrator,model_project_team_technians,base.group_system,1,1,1,1

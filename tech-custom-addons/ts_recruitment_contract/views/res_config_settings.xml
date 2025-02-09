@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ts_contract_res_config_settings_form" model="ir.ui.view">
+        <field name="name">contract.res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_recruitment.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='hr_recruitment']" position="inside">
+                <h2>Contract</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="type_id"/>
+                            <field
+                              name="type_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="structure_type_id"/>
+                            <field
+                              name="structure_type_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="contract_type_id"/>
+                            <field
+                              name="contract_type_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="resource_calendar_id"/>
+                            <field
+                              name="resource_calendar_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="analytic_account_id"/>
+                            <field
+                              name="analytic_account_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+                    <div class="content-group">
+
+                        <div class="mt16">
+                            <label for="journal_id"/>
+                            <field
+                              name="journal_id"
+                              options="{'no_open': True, 'no_create': True}"/>
+                        </div>
+                    </div>
+<!--                    <div class="text-muted">-->
+<!--                        Select Project for Interview-->
+<!--                    </div>-->
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

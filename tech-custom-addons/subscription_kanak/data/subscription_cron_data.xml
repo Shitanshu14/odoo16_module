@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.cron" id="subscription_cron_for_invoice">
+            <field name="name">Generate Recurring Invoices from subscriptions</field>
+            <field name="model_id" ref="model_subscription_subscription" />
+            <field name="state">code</field>
+            <field name="code">model.cron_recurring_create_sale_orders()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+        </record>
+        <record model="ir.cron" id="reminder_mail_before_delivery_cron">
+            <field name="name">Subscription : Reminder Mail Before Delivery</field>
+            <field name="model_id" ref="model_subscription_subscription" />
+            <field name="state">code</field>
+            <field name="code">model.cron_delivery_reminder_mail_send()</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+        </record>
+        <record id="automated_action_close_subline" model="base.automation">
+            <field name="name">Subscription Line: close the ended subscription line</field>
+            <field name="model_id" ref="model_subscription_line" />
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="filter_domain">[('state', '!=', 'closed')]</field>
+            <field name="trigger">on_time</field>
+            <field name="trg_date_id" model="ir.model.fields" eval="obj().search([('name', '=', 'date_end'), ('model_id', '=', ref('subscription_kanak.model_subscription_line'))], limit=1).id"/>
+            <field name="trg_date_range">-1</field>
+            <field name="trg_date_range_type">minutes</field>
+            <field name="code">records.action_close_subscription()</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">   
+ <record id="tech_employee_birthday_email_tpl" model="mail.template">
+        <field name="name">Employee Happy Birthday Email</field>
+        <field name="email_from">career@technians.com</field>
+        <field name="subject">{{object.name}}, Happy Birthday! Let the fun begin! 🎉🎂🎈</field>
+ <field name="email_to">{{object.work_email}}</field>
+        <field name="lang">${object.lang}</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html">
+            <![CDATA[
+            <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">
+            <tbody>
+                <tr>
+                    <td align="center" style="padding: 0px;">
+                        <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">
+                            <tbody>
+                                <tr>
+                                <td style="text-align: center;padding:0;padding: 53px 0px;color:#fff;background: url(https://stag.technians.com/wp-content/uploads/2023/07/Group-13.png);background-size: cover;" colspan="3">
+                                            <a href="#"><img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png" style="width:200px"></a>
+                                            <div>
+                                               <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/greeting-text.png" style="width: 60%;"></a>
+                                            </div>
+</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0px 20px 20px 60px;background-color:#ffffff;font-size: 18px;font-family: 'Verdana', sans-serif;background: url(https://technians.com/wp-content/uploads/2024/11/new-1.jpg);background-size: contain;background-repeat: no-repeat;" colspan="3">
+                                            <p style="padding-top: 20px;">Happy Birthday <b><t t-out="object.name or '''there'''"></t>!</b></p>
+                                            <p style="margin: 0;">We wish you a day filled with laughter, surprises,</p><p style="margin: 0;">and all things delightfully weird.</p>
+                                            <p style="background: url(https://technians.com/wp-content/uploads/2023/09/highlighter.png);background-size: 80% 130%;background-position: left;background-repeat: no-repeat;margin: 20px 0px;">You bring incredible energy to the team, and we're grateful<br> to have you as part of our work family.</p>
+                                            <p>So, don’t forget to blow out those candles and make a wish!</p>
+                                            <p style="margin: 50px 0px 0px;">Here's to another year of amazing accomplishments and<br>unforgettable adventures together.</p>
+                                            <p>Have an epic birthday celebration!</p>
+                                        </td>
+                                    </tr>
+                                <tr style="background-color: #1594b4;">
+                                    <td colspan="3" style="padding-bottom: 10px;">
+                                        <!-- <p style="color: #fff;font-family: 'Verdana', sans-serif;font-size: 24px;text-align: center;margin: 15px 0;">
+                                            Stay connected with us</p> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h3 style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">
+                                            Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <p style="font-size: 17px;font-weight: 700;font-family: 'Verdana', sans-serif;text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span>
+                                            and trusted partner for:</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img style="width: 100%;" src="https://technians.com/wp-content/uploads/2024/11/final-img.png"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:33px 15px 10px;background-color:#18aec9;" colspan="3">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/gurugram-2.png" alt="gurugram" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Gurgaon</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/delhi-1.png" alt="delhi" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Delhi</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/mumbai-1.png" alt="mumbai" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Mumbai</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/bangaluru-1.png" alt="bangaluru" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Bengaluru</h3>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="background-color: #18aec9;height: 20px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#fff">
+                                    <td colspan="3" style="padding:20px 50px">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+<tr>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/sales-number.png" style="width:109%;float:left">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/call-2-1.gif" style="width: 104%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49.png" style="width: 110%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/whatsapp1-1.gif" style="width: 104%;float: right;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/salesnumber-2.png" style="width:107%;float:right">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/hr-mailer.png" style="width: 110%;float: left;">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/call-2-1-1.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49-2.png" style="width: 112%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/whatsapp1-2.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/hr-number.png" style="width:110%;float:left">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/Group-13.png" style="width: 100%;float: left;"></a>
+                                    </td>
+                                </tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+            ]]>
+        </field>
+    </record>
+ <record id="tech_employee_arch_birthday_email_tpl" model="mail.template">
+        <field name="name">Archived Employee Happy Birthday Email</field>
+        <field name="email_from">career@technians.com</field>
+        <field name="subject">{{object.name}}, Happy Birthday! Let the fun begin! 🎉🎂🎈</field>
+ <field name="email_to">{{object.email_personal}}</field>
+        <field name="lang">${object.lang}</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html">
+            <![CDATA[
+            <table role="presentation" style="width:100%;border-spacing:0;font-family: 'Tahoma', serif;">
+            <tbody>
+                <tr>
+                    <td align="center" style="padding: 0px;">
+                        <table role="presentation" style="width:100%;max-width:800px;border-spacing:0;border: 1px solid #ededed;background-color: #fff;">
+                            <tbody>
+                                <tr>
+                                <td style="text-align: center;padding:0;padding: 53px 0px;color:#fff;background: url(https://stag.technians.com/wp-content/uploads/2023/07/Group-13.png);background-size: cover;" colspan="3">
+                                            <a href="#"><img src="https://technians.com/wp-content/uploads/2022/06/mt-logo.png" style="width:200px"></a>
+                                            <div>
+                                               <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/greeting-text.png" style="width: 60%;"></a>
+                                            </div>
+</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0px 20px 20px 60px;background-color:#ffffff;font-size: 18px;font-family: 'Verdana', sans-serif;background: url(https://technians.com/wp-content/uploads/2024/11/new-1.jpg);background-size: contain;background-repeat: no-repeat;" colspan="3">
+                                            <p style="padding-top: 20px;">Happy Birthday <b><t t-out="object.name or '''there'''"></t>!</b></p>
+                                            <p style="margin: 0;">We wish you a day filled with laughter, surprises,</p><p style="margin: 0;">and all things delightfully weird.</p>
+                                            <p style="background: url(https://technians.com/wp-content/uploads/2023/09/highlighter.png);background-size: 80% 130%;background-position: left;background-repeat: no-repeat;margin: 20px 0px;">You bring incredible energy to the team, and we're grateful<br> to have you as part of our work family.</p>
+                                            <p>So, don’t forget to blow out those candles and make a wish!</p>
+                                            <p style="margin: 50px 0px 0px;">Here's to another year of amazing accomplishments and<br>unforgettable adventures together.</p>
+                                            <p>Have an epic birthday celebration!</p>
+                                        </td>
+                                    </tr>
+                                <tr style="background-color: #1594b4;">
+                                    <td colspan="3" style="padding-bottom: 10px;">
+                                        <!-- <p style="color: #fff;font-family: 'Verdana', sans-serif;font-size: 24px;text-align: center;margin: 15px 0;">
+                                            Stay connected with us</p> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h3 style="font-family: 'Verdana', sans-serif;color: #292929;font-size: 42px;margin-bottom: 0;margin-top: 30px;text-align: center;">
+                                            Let's bring a <span style="color: #fcc626;">revolution</span> <span style="color: #1594b4;">together!</span></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <img src="https://technians.com/wp-content/uploads/2023/03/border-dashed.png" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <p style="font-size: 17px;font-weight: 700;font-family: 'Verdana', sans-serif;text-align: center;">We are one of the <span style="color: #1594b4;">leading digital marketing agency</span>
+                                            and trusted partner for:</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img style="width: 100%;" src="https://technians.com/wp-content/uploads/2024/11/final-img.png"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:33px 15px 10px;background-color:#18aec9;" colspan="3">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 7px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/gurugram-2.png" alt="gurugram" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Gurgaon</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/delhi-1.png" alt="delhi" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Delhi</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 28%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/mumbai-1.png" alt="mumbai" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Mumbai</h3>
+                                                    </td>
+                                                    <td>
+                                                        <img src="https://technians.com/wp-content/uploads/2023/05/border-1.png" style="float: left;height: 65px;">
+                                                    </td>
+                                                    <td style="text-align: center;color: #fff;width: 25%;padding: 0px 10px;">
+                                                        <img src="https://technians.com/wp-content/uploads/2024/11/bangaluru-1.png" alt="bangaluru" style="width: 40px;">
+                                                        <h3 style="margin: 0px;font-family: 'Verdana', sans-serif;font-size: 20px;
+                                                        padding-top: 10px;">Bengaluru</h3>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" style="background-color: #18aec9;height: 20px;"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#fff">
+                                    <td colspan="3" style="padding:20px 50px">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+<tr>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/sales-number.png" style="width:109%;float:left">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/call-2-1.gif" style="width: 104%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49.png" style="width: 110%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/whatsapp1-1.gif" style="width: 104%;float: right;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/salesnumber-2.png" style="width:107%;float:right">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/hr-mailer.png" style="width: 110%;float: left;">
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="tel:9899920599">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/call-2-1-1.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/New-Project-49-2.png" style="width: 112%;float: left;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding:0px">
+                                                                        <a href="https://wa.me/919899920599?text=">
+                                                                            <img src="https://technians.com/wp-content/uploads/2024/11/whatsapp1-2.gif" style="width: 105%;float: left;background: #ececec;">
+                                                                        </a>
+                                                                    </td>
+                                                                    <td style="padding: 0px;">
+                                                                        <img src="https://technians.com/wp-content/uploads/2024/11/hr-number.png" style="width:110%;float:left">
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a href="#"><img src="https://technians.com/wp-content/uploads/2024/11/Group-13.png" style="width: 100%;float: left;"></a>
+                                    </td>
+                                </tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+            ]]>
+        </field>
+    </record>
+
+    <record id="tech_employee_arch_birthday_email_cron" model="ir.cron">
+            <field name="name">Archived Employee Birthday Wishes Cron</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_employee_arch_send_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+
+    <record id="tech_employee_birthday_email_cron" model="ir.cron">
+            <field name="name">Employee Birthday Wishes Email</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_employee_send_birthday_email()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+    <!-- Custom filter for Employee Birthdays this Month -->
+    <record id="hr_applicant_search" model="ir.ui.view">
+        <field name="name">hr.employee.birthday.filter</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Birthday This Month" name="birthday_current_month" domain="[('is_birthday_month', '=',True)]" />
+                <filter string="Anniversary This Month" name="anniversary_current_month" domain="[('is_anniversary_month', '=',True)]" />
+            </search>
+        </field>
+    </record>
+
+
+    <record id="tech_monthly_anniversary_update_cron" model="ir.cron">
+            <field name="name">Check Monthly Employee Anniversaries</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.tech_monthly_anniversary_update()</field>
+            <!-- Set the desired interval for the cron job (in this case, it runs daily) -->
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="(datetime.utcnow() + timedelta(days=0)).strftime('%Y-%m-%d 02:30:00')" />
+            
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+            <field name="interval_type">days</field>
+        </record>
+
+        <record id="ts_hr_employee_inherit" model="ir.ui.view">
+            <field name="name">ts.hr.employee.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="email_personal" widget="email"/>
+                </xpath>
+            </field>
+            </record>
+    </data>
+</odoo>  

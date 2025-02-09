@@ -1,0 +1,39 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ts_project_task_time_task_timer_description_form_view" model="ir.ui.view">
+            <field name="name">task.timer.description.form</field>
+            <field name="model">task.timer.description</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="name" string="Task Timer Description"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ts_project_task_time_task_timer_description_tree_view" model="ir.ui.view">
+            <field name="name">task.timer.description.tree</field>
+            <field name="model">task.timer.description</field>
+            <field name="arch" type="xml">
+                <tree create="1">
+                    <field name="name" string="Task Timer Description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_task_timer_description" model="ir.actions.act_window">
+            <field name="name">Task Timer Description</field>
+            <field name="res_model">task.timer.description</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ts_project_task_time_task_timer_description_tree_view"/>
+        </record>
+
+        <menuitem id="menu_task_timer_description"
+                  name="Task Timer Description"
+                  parent="project.menu_project_config"
+                  sequence="20"
+                  action="action_task_timer_description"/>
+    </data>
+</odoo>

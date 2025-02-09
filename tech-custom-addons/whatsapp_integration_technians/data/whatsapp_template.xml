@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <record id="sales_whatsapp_template" model="mail.template">
+        <field name="name">Sales: Confirm Order [Whatsapp:]</field>
+        <field name="subject">Sales Confirm</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+        Hello <strong><t t-esc= "object.partner_id.name or ''"/></strong><br>
+        Your order <strong><t t-esc= "object.name or ''"/></strong> amount <strong><t t-esc= "format_amount(object.amount_total, object.currency_id) or ''"/></strong>  is Confirmed.
+        <br>
+        Kindly refer below link for order receipt.
+        <br />
+        <strong><t t-esc="user.name"/></strong>
+        ]]>
+        </field>
+    </record>
+
+    <record id="purchase_whatsapp_template" model="mail.template">
+        <field name="name">Purchase: Confirm Order [Whatsapp:]</field>
+        <field name="subject">Purchase Order</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="body_html"><![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px;">
+         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                Dear <strong><t t-esc= "object.partner_id.name or ''"/></strong><br/>
+                <t t-if="object.partner_id.parent_id">
+
+                    <strong>(<t t-esc="object.partner_id.parent_id.name"/>)</strong>
+                </t>
+                <br/>
+                Here is in attachment a purchase order <strong><t t-esc="object.name"/></strong>
+                <t t-if="object.partner_ref">
+                    with reference: <strong><t t-esc="object.partner_ref"/></strong>
+                </t>
+                amounting in <strong><t t-esc="format_amount(object.amount_total, object.currency_id)"/> </strong> 
+                 from <strong><t t-esc="object.company_id.name"/></strong>.
+                <br/><br/>
+                If you have any questions, please do not hesitate to contact us.
+                <br/><br/>
+                Best regards,<br />
+                <strong><t t-esc="user.name"/></strong>
+            </p>
+        ]]>
+        </field>       
+    </record>
+    
+        <record id="whatsapp_template_technians_reschedule_request" model="mail.template">
+            <field name="name">Asking for Meeting Reschedule [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Reschedule Request: When Works Best for You? | Technians MarTech Agency</field>
+            <field name="email_to">{{ object.email_from }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>I hope you’re well. Unfortunately we missed our meeting. 
+
+                </p>
+                <p>I was wondering if we can reschedule it? </p>
+                <p>Please let me know your availability in the next few days, and I’ll make sure to adjust accordingly.</p>
+                
+                <p>Looking forward to your response.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_technians_followup_martech_services" model="mail.template">
+            <field name="name">Follow-up on MarTech Services [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Follow-up on MarTech Services</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hello <t t-esc="object.name or ''"/>,</p>
+                <p>I hope you're doing well.</p>
+                <p>I haven't heard from you to help your company with our MarTech services in the past few days.
+                </p>
+                <p>I just wanted to ensure there are no outstanding questions or concerns on your end before I close your query.
+                </p>
+                <p>Feel free to reach out anytime if you wish to revisit this.</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+
+        <record id="whatsapp_template_technians_checking_in_martech_strategy" model="mail.template">
+            <field name="name">Checking In on MarTech Strategy [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Checking In on MarTech Strategy</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hello <t t-esc="object.name or ''"/>!</p>
+                <p>I hope you’re doing well! Just checking in since I haven’t heard from you regarding our previous
+                    discussions about the MarTech strategy suitable for your company.
+                </p>
+                <p>If you’re still interested or need any more information, please let me know. If not, I’ll assume
+                    priorities have shifted and will close your query for now.
+                </p>
+                <p>Of course, if you decide to revisit this in the future, we’d be happy to pick up where we left off.
+                </p>
+                <p>Thanks and take care!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_technians_meeting_reschedule_request" model="mail.template">
+            <field name="name">Meeting Reschedule Request [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Meeting Reschedule Request</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hello <t t-esc="object.name or ''"/></p>
+                <p>I’m sorry I missed your call earlier. Your call is important to us, and I want to make sure we address your needs.
+</p>
+                <p>When would be a good time for us to connect? Or if you prefer, you can send me a message here with any questions or concerns you have.
+
+                </p>
+                <p>Looking forward to helping you!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_technians_introduction_call_request" model="mail.template">
+            <field name="name">Introduction and Call Request [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Unanswered call fresh lead or untouched lead</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hello <t t-esc="object.name or ''"/>!</p>
+                <p>We tried calling you earlier to discuss how our services can help elevate your business.
+                </p>
+                <p>We specialize in:</p>
+                <ul>
+                    <li>Agency Services: SEO, Paid Media, E-commerce, and Social Media.</li>
+                    <li>Creative Studio: Website Design, UI/UX, and Video Production.</li>
+                    <li>Technology: Web Apps, ERP/CRM, and Mobile Development.</li>
+                </ul>
+                <p>When's a good time for us to connect? Looking forward to your reply!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_technians_meeting_confirmation" model="mail.template">
+            <field name="name">Meeting Confirmation [Whatsapp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Meeting Confirmation</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hey <t t-esc="object.name or ''"/>!</p>
+                <p>I hope this message finds you well.</p>
+                <p>Just wanted to confirm our meeting. I would appreciate it if you could confirm your availability for the meeting.</p>
+                <p>Looking forward to our discussion!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_missed_call_follow_up" model="mail.template">
+            <field name="name">Missed Call Follow-up [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Missed Call Follow-up</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>!</p>
+                <p>I’m sorry I missed your call earlier. Your call is important to us, and I want to make sure we
+                    address your needs.
+                </p>
+                <p>When would be a good time for us to connect? Or if you prefer, you can send me a message here with
+                    any questions or concerns you have.
+                </p>
+                <p>Looking forward to helping you!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_martech_services_interest" model="mail.template">
+            <field name="name">Interest in Martech Services [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Interest in Martech Services</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>Hope you're doing well. We noticed your interest in Technians' Martech services. We're here to assist
+                    you with any questions you may have.
+                </p>
+                <p>When would be a good time to connect briefly?</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_linkedin_follow_up" model="mail.template">
+            <field name="name">LinkedIn Post Follow-up [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">LinkedIn Post Follow-up</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>Hope you're well. We noticed your LinkedIn post seeking an Advertising Agency and tried reaching out but couldn't connect.
+                </p>
+                <p>At Technians, we've successfully partnered with over 1300+ brands, crafting personalized digital strategies for their success.
+
+                </p>
+                <p>Let's discuss how we can tailor our solutions to meet your needs. When would be a good time for you?
+                </p>
+                <p>Looking forward to connecting!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_seeking_agency" model="mail.template">
+            <field name="name">Seeking Marketing Agency [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Seeking Marketing Agency</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>I hope you're well. I saw your LinkedIn post about needing a Marketing agency. At Technians, we specialize in innovative tech and marketing solutions with a decade of experience and clients.</p>
+                <p>Could you share the contact number of your marketing contact? Let's discuss how we can help your business. When is a good time for you?
+
+                </p>
+                <p>Looking forward to your reply!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_referral_follow_up" model="mail.template">
+            <field name="name">Referral Follow-up [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Referral Follow-up</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>Hope you're well. I was referred to you by one of your colleagues regarding your company's interest in our services.
+
+                </p>
+                <p>I hope you've seen our emails about how Technians have driven success for over 1300+ brands.
+
+                </p>
+                <p>Tried reaching you today but couldn't connect. When would be a good time for a call or e-meet?</p>
+                <p>Looking forward to your response!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        <record id="whatsapp_template_documents_follow_up" model="mail.template">
+            <field name="name">Documents Sent [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">Documents Sent Follow-up</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>I hope you're doing well. </p>
+                <p>As we discussed, I've sent the required documents to your email id. Please take a look when you have a moment.</p>
+                <p>Could you let me know when would be a good time for a call or e-meet?</p>
+                <p>Looking forward to your response!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+
+        
+        <record id="whatsapp_template_customer_query" model="mail.template">
+            <field name="name">Unanswered call: If you receive a query from the customer [WhatsApp:]</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="subject">We received your query! | Technians MarTech Agency</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <p>Hi <t t-esc="object.name or ''"/>,</p>
+                <p>I tried calling you earlier but couldn't reach you. I saw your query about our Martech solutions at Technians. 
+ </p>
+                <p>If you could give me a convenient time to reach out to you, that would be great since I know your schedule must be packed. 
+</p>
+                <p>If you have more questions or need further details, feel free to reply here. I would be happy to assist!
+</p>
+                <p>Looking forward to your response!</p>
+                <p>Best regards,</p>
+                <p>Technians</p>
+            </field>
+        </record>
+        </data>
+</odoo>

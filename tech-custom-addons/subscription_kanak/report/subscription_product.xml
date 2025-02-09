@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_subscription" model="ir.actions.report">
+        <field name="name">Subscription Product</field>
+        <field name="model">subscription.subscription</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">subscription_kanak.report_subscription_product</field>
+        <field name="report_file">subscription_kanak.report_subscription_product</field>
+        <field name="print_report_name">'Product Subscription - %s' % (object.name)</field>
+        <field name="paperformat_id" ref="subscription_kanak.subscription_product_report"/>
+        <field name="binding_model_id" ref="model_subscription_subscription"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
