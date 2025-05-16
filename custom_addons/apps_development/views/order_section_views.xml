@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_section_tree" model="ir.ui.view">
+        <field name="name">apps_development.order.section.tree</field>
+        <field name="model">apps_development.order.section</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone_number"/>
+                <field name="service_provider_id"/>
+                <field name="time_schedule"/>
+                <field name="partner_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_order_section_form" model="ir.ui.view">
+        <field name="name">apps_development.order.section.form</field>
+        <field name="model">apps_development.order.section</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="order_id"/>
+                        <field name="name"/>
+                        <field name="phone_number"/>
+                        <field name="time_schedule"/>
+                        <field name="partner_id"/>
+                        <field name="service_type"/>
+                        <field name="service_provider_id"/>
+                    </group>
+
+                    <!-- Add notebook to organize tabs -->
+                    <notebook>
+                        <!-- Feedback Tab -->
+                        <page string="Feedback">
+                            <field name="feedback" widget="text" placeholder="Enter feedback here..."/>
+                        </page>
+
+
+                    </notebook>
+
+                </sheet>
+
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+<!--    <record id="seq_order_section" model="ir.sequence">-->
+<!--        <field name="name">Order Section Sequence</field>-->
+<!--        <field name="code">apps_development.order.section</field>-->
+<!--        <field name="prefix">ORD/</field>-->
+<!--        <field name="padding">5</field>-->
+<!--        <field name="number_next">1</field>-->
+<!--        <field name="number_increment">1</field>-->
+<!--        <field name="implementation">no_gap</field>-->
+<!--    </record>-->
+
+    <menuitem id="menu_apps_development" name="Technians Development" sequence="1"/>
+
+    <menuitem id="menu_order_section" name="Order Section" parent="menu_apps_development"
+              action="action_order_section"/>
+
+    <record id="action_order_section" model="ir.actions.act_window">
+        <field name="name">Order Sections</field>
+        <field name="res_model">apps_development.order.section</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

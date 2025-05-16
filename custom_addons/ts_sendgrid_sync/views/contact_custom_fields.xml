@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="contact_custom_fields_view_form" model="ir.ui.view">
+        <field name="name">Sendgrid Field</field>
+        <field name="model">contact.custom.fields</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="field_id" invisible="1"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="field_type" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="contact_custom_fields_view_Tree" model="ir.ui.view">
+        <field name="name">Sendgrid Fields</field>
+        <field name="model">contact.custom.fields</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="field_type"/>
+            </tree>
+        </field>
+    </record>
+
+<!--    <record id="action_fields_link_wizard_view" model="ir.actions.act_window">-->
+<!--        <field name="name">Link Odoo Fields with Sendgrid Fields</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">fields.link.wizard</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--&lt;!&ndash;        <field name="target">new</field>&ndash;&gt;-->
+<!--        <field name="view_id" ref="fields_link_wizard_view_Tree"/>-->
+<!--    </record>-->
+</odoo>

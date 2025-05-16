@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View Extension -->
+        <record id="view_applicant_tree_inherit_email_validation" model="ir.ui.view">
+            <field name="name">hr.applicant.tree.inherit.email.validation</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <field name="is_email_valid"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Search View Filters -->
+        <record id="view_applicant_search_inherit_email_validation" model="ir.ui.view">
+            <field name="name">hr.applicant.search.inherit.email.validation</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="is_email_valid" string="Valid Email" domain="[('is_email_valid', '=', True)]"/>
+                    <filter name="is_email_invalid" string="Invalid Email" domain="[('is_email_valid', '=', False)]"/>
+                    <filter name="email_not_verified" string="Email Not Verified"
+                            domain="[('email_from', '!=', False), '|', ('email_validation_message', '=', False), ('email_validation_message', '=', 'Ready for SMTP Check')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_applicant_form_inherit_email_validation" model="ir.ui.view">
+            <field name="name">hr.applicant.form.inherit.email.validation</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email_from']" position="replace">
+                    <!-- Green Text (Verified) -->
+                    <field name="email_from"
+                           attrs="{'invisible': [('is_email_valid', '=', False)]}"
+                           style="color: green;"/>
+
+                    <!-- Red Text (Not Verified) -->
+                    <field name="email_from"
+                           attrs="{'invisible': [('is_email_valid', '=', True)]}"
+                           style="color: red;"/>
+
+                    <!-- Invisible technical field -->
+                    <field name="is_email_valid" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Optional: Server Action for Bulk Validation -->
+        <record id="action_hr_applicant_validate_email" model="ir.actions.server">
+            <field name="name">Validate Email ID</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="state">code</field>
+            <field name="binding_type">action</field>
+            <field name="code">
+                action = env['hr.applicant'].browse(env.context.get('active_ids')).action_bulk_validate_email()
+            </field>
+        </record>
+
+        <!--                <xpath expr="//field[@name='email_from']" position="after">-->
+        <!--                    <field name="is_email_valid" invisible="1"/>-->
+        <!--                    <field name="email_validation_message" invisible="1"/>-->
+        <!--                    <field name="show_validate_email_button" invisible="1"/>-->
+        <!--                    &lt;!&ndash; Success Icon &ndash;&gt;-->
+        <!--                    <span class="fa fa-check-circle text-success small"-->
+        <!--                          title="Valid Email"-->
+        <!--                          style="margin-left: 6px; font-size: 14px; vertical-align: middle;"-->
+        <!--                          attrs="{'invisible': [('is_email_valid', '=', False)]}"/>-->
+
+        <!--                    &lt;!&ndash; Error Icon &ndash;&gt;-->
+        <!--                    <span class="fa fa-times-circle text-danger small"-->
+        <!--                          title="Invalid Email"-->
+        <!--                          style="margin-left: 6px; font-size: 14px; vertical-align: middle;"-->
+        <!--                          attrs="{'invisible': [('is_email_valid', '=', True)]}"/>-->
+
+        <!--                    &lt;!&ndash; Error Message + Validate Button &ndash;&gt;-->
+        <!--                    <div class="text-danger small"-->
+        <!--                         style="margin-top: 2px; margin-left: 2px;"-->
+        <!--                         attrs="{'invisible': [('is_email_valid', '=', True)]}">-->
+
+        <!--                        <field name="email_validation_message" readonly="1"/>-->
+
+        <!--                        &lt;!&ndash; Validate Email Button &ndash;&gt;-->
+        <!--                        <button name="action_validate_email_smtp"-->
+        <!--                                string="Validate Email"-->
+        <!--                                type="object"-->
+        <!--                                class="btn btn-success btn-sm"-->
+        <!--                                style="margin-top: 4px;"-->
+        <!--                                attrs="{'invisible': [('show_validate_email_button', '=', False)]}"/>-->
+        <!--                    </div>-->
+        <!--                </xpath>-->
+
+    </data>
+</odoo>

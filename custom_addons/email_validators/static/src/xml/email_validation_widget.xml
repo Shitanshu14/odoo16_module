@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<templates xml:space="preserve">
+    <t t-name="email_validation_widget.EmailFieldValidation" t-inherit="web.EmailField" t-inherit-mode="primary">
+        <xpath expr="//div[@class='o_form_field o_field_widget o_required_modifier']" position="inside">
+            <!-- Add the icon next to the email field -->
+            <t t-if="props.record.data[props.name]">
+                <i class="fa" t-att-class="emailValidationIcon" aria-hidden="true"></i>
+            </t>
+        </xpath>
+
+        <!-- Show invalid email message if not valid -->
+        <xpath expr="//div[@class='o_form_field']" position="after">
+            <div t-if="errorMessage" class="alert alert-danger mt-2" role="alert">
+                <t t-esc="errorMessage"/>
+            </div>
+        </xpath>
+    </t>
+</templates>

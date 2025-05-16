@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_order_section,access_order_section,model_apps_development_order_section,base.group_user,1,1,1,1
+access_service_provider,access_service_provider,model_apps_development_service_provider,base.group_user,1,1,1,1
+access_res_country_district,res.country.district,model_res_country_district,,1,1,1,1

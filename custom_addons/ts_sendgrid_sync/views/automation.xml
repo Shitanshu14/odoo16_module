@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="automation_assign_id_to_contact" model="ir.cron">
+        <field name="name">Auto Assign Id of Sendgrid Field in Odoo</field>
+        <field name="model_id" ref="ts_sendgrid_sync.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model.fetch_contacts_id_from_sendgrid()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

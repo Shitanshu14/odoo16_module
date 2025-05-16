@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sendgrid_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">sendgrid.res.config.settings.view.form.</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="45"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block icon d-none d-md-block" data-string="Sendgrid Sync" string="Sendgrid Sync"
+                     data-key="ts_sendgrid_sync"
+                     style="background : url('/ts_sendgrid_sync/static/description/icon.png') no-repeat center; background-size:contain;">
+                    <h2>Sendgrid Sync</h2>
+                    <div class="row mt16 o_settings_container" id="Sendgrid">
+                        <label for="set_sendgrid" string="Set SendGrid API"/>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <field name="set_sendgrid"/>
+                            <label for="api_key"/>
+                            <field name="api_key" attrs="{'invisible':[('set_sendgrid', '=', False)]}"/>
+                        </div>
+                    </div>
+                    <h2 attrs="{'invisible':[('set_sendgrid', '=', False)]}">Contact</h2>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_sync"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_sync"/>
+                                <div class="text-muted">
+                                    Automatically sync Contact with Sendgrid on creation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="delete_sync"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="delete_sync"/>
+                                <div class="text-muted">
+                                    Automatically Delete Contact in Sendgrid upon Deletion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="display_warning"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="display_warning"/>
+                                <div class="text-muted">
+                                    Display Warning for Contact not Synced with sendgrid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 attrs="{'invisible':[('set_sendgrid', '=', False)]}">Applicant</h2>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_sync_applicant"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_sync_applicant"/>
+                                <div class="text-muted">
+                                    Automatically sync Applicant with Sendgrid on creation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="delete_sync_applicant"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="delete_sync_applicant"/>
+                                <div class="text-muted">
+                                    Automatically Delete Applicant in Sendgrid upon Deletion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="display_warning_applicant"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="display_warning_applicant"/>
+                                <div class="text-muted">
+                                    Display Warning for Applicant not Synced with sendgrid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 attrs="{'invisible':[('set_sendgrid', '=', False)]}">CRM Lead</h2>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_sync_crm"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_sync_crm"/>
+                                <div class="text-muted">
+                                    Automatically sync Leads with Sendgrid on creation
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="delete_sync_crm"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="delete_sync_crm"/>
+                                <div class="text-muted">
+                                    Automatically Delete Lead in Sendgrid upon Deletion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt16 o_settings_container" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="display_warning_crm"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="display_warning_crm"/>
+                                <div class="text-muted">
+                                    Display Warning for CRM Leads not Synced with sendgrid
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 attrs="{'invisible':[('set_sendgrid', '=', False)]}">Send Contact Limit</h2>
+                    <div class="row mt16 o_settings_container" id="Sendgrid" attrs="{'invisible':[('set_sendgrid', '=', False)]}">
+                        <div><strong>Set a Limit on number of Contacts that can be Sent</strong></div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <label for="contact_send_limit"/>
+                            <field name="contact_send_limit" placeholder="Default limit is 80"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

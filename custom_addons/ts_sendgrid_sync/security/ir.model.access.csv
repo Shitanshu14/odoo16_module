@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ts_sendgrid_sync.access_res_partner,access_res_partner,ts_sendgrid_sync.model_res_partner,,1,1,1,1
+ts_sendgrid_sync.access_contact_custom_fields,access_contact_custom_fields,ts_sendgrid_sync.model_contact_custom_fields,,1,1,1,1
+ts_sendgrid_sync.access_contacts_fields_link,access_contacts_fields_link,ts_sendgrid_sync.model_contacts_fields_link,,1,1,1,1
+ts_sendgrid_sync.access_crm_fields_link,access_crm_fields_link,ts_sendgrid_sync.model_crm_fields_link,,1,1,1,1
+ts_sendgrid_sync.access_applicant_fields_link,access_applicant_fields_link,ts_sendgrid_sync.model_applicant_fields_link,,1,1,1,1
+ts_sendgrid_sync.access_contacts_send_wizard,access_contacts_send_wizard,ts_sendgrid_sync.model_contacts_send_wizard,,1,1,1,1
+ts_sendgrid_sync.access_crm_send_wizard,access_crm_send_wizard,ts_sendgrid_sync.model_crm_send_wizard,,1,1,1,1
+ts_sendgrid_sync.access_applicant_send_wizard,access_applicant_send_wizard,ts_sendgrid_sync.model_applicant_send_wizard,,1,1,1,1
+ts_sendgrid_sync.access_auth_provider,access_auth_provider,auth_oauth.model_auth_oauth_provider,base.group_user,1,0,0,0
+ts_sendgrid_sync.access_ir_settings,access_ir_settings,base.model_ir_config_parameter,base.group_user,1,0,0,0
+ts_sendgrid_sync.access_ir_model_field,access_ir_model_fields,base.model_ir_model_fields,base.group_user,1,0,0,0

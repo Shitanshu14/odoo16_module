@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_delete_old_attachments" model="ir.cron">
+            <field name="name">Delete Old Attachments</field>
+            <field name="model_id" ref="base.model_ir_attachment"/>
+            <field name="state">code</field>
+            <field name="code">model.delete_old_attachments_cron()</field>
+            <field name="interval_type">days</field>
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+            <field name="priority">5</field>
+        </record>
+
+
+        <record id="ir_cron_sync_attachments_to_s3" model="ir.cron">
+            <field name="name">Sync Attachments to S3</field>
+            <field name="model_id" ref="base.model_ir_attachment"/>
+            <field name="state">code</field>
+            <field name="code">model.sync_attachments_to_s3()</field>
+            <field name="interval_type">days</field>
+            <field name="interval_number">1</field>  <!-- This will run every day -->
+            <field name="numbercall">-1</field>  <!-- Run indefinitely -->
+            <field name="priority">5</field>
+        </record>
+
+        <record id="view_attachment_tree_s3" model="ir.ui.view">
+            <field name="name">ir.attachment.tree.s3</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_tree"/>
+            <field name="arch" type="xml">
+                <field name="res_id" position="after">
+                    <field name="is_s3"/>
+                    <field name="s3_url"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

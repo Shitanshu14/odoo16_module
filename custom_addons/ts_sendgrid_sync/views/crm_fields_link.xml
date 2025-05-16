@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_crm_send_wizard_form" model="ir.ui.view">
+        <field name="name">crm.send.wizard.form</field>
+        <field name="model">crm.send.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Display Mapped Fields">
+                <group>
+                    <field name="link_ids" readonly="1" nolabel="1" colspan="2">
+                        <tree string="Mapped Fields">
+                            <field name="odoo_field"/>
+                            <field name="sendgrid_field"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Send" type="object" name="send_contact_now" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_fields_link_view_form" model="ir.ui.view">
+        <field name="name">Map Odoo Fields with Sendgrid Fields</field>
+        <field name="model">crm.fields.link</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="odoo_field" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="sendgrid_field" options="{'no_create': True}" attrs="{'invisible': [('odoo_field', '=', False)]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_fields_link_view_Tree" model="ir.ui.view">
+        <field name="name">Mapped Odoo Fields with Sendgrid Fields</field>
+        <field name="model">crm.fields.link</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="odoo_field" options="{'no_create': True}"/>
+                <field name="sendgrid_field" options="{'no_create': True}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_crm_fields_link_view" model="ir.actions.act_window">
+        <field name="name">Map Odoo Fields with Sendgrid Fields</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.fields.link</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="crm_fields_link_view_Tree"/>
+    </record>
+
+    <record id="action_serve_crm_fields_link_view" model="ir.actions.server">
+        <field name="name">Export Lead to SendGrid</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.button_to_link()
+        </field>
+    </record>
+
+    <menuitem id="crm_menu_config_sendgrid"
+        name="Sendgrid Sync"
+        parent="crm.crm_menu_config"
+        sequence="0"/>
+
+    <menuitem id="crm_menu_config_sendgrid_link"
+        name="Map CRM Fields"
+        parent="crm_menu_config_sendgrid"
+        action="ts_sendgrid_sync.action_serve_crm_fields_link_view"
+        sequence="2"/>
+
+</odoo>

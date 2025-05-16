@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sendgrid_extends_crm_lead" model="ir.ui.view">
+        <field name="name">crm.lead.sendgrid</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form//sheet" position="before">
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': ['|',('synced_with_sendgrid', '=', True),('display_warning_crm', '=', False)]}">
+                  This Contact is not Synced with Sendgrid
+                </div>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='partner_name']" position="before">
+                <label for="synced_with_sendgrid"/>
+                <div class="o_row">
+                    <field name="display_warning_crm" invisible="1"/>
+                    <field name="synced_with_sendgrid" invisible="1"/>
+                </div>
+            </xpath>
+<!--            <xpath expr="/form/sheet/div/button[@name='action_schedule_meeting']" position="before">-->
+<!--                <button name="fetch_contacts_id_from_sendgrid" type="object" class="btn-primary"-->
+<!--                                    string="Set Contact ID" ></button>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="sendgrid_extends_crm_lead_search" model="ir.ui.view">
+        <field name="name">crm.lead.sendgrid.search</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="sendgrid_synced" string="Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', True)]"/>
+                <filter name="not_sendgrid_synced" string="Not Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="export_crm_contact_from_odoo" model="ir.actions.server">
+        <field name="name">Export Lead to SendGrid</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="binding_model_id" ref="model_crm_lead"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.add_contact_from_odoo()
+        </field>
+    </record>
+
+</odoo>

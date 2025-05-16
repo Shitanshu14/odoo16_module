@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sendgrid_stats_view_form" model="ir.ui.view">
+        <field name="name">Sendgrid Stat</field>
+        <field name="model">sendgrid.stats</field>
+        <field name="arch" type="xml">
+            <form string="Stats" class="o_hr_stats_dialog_form">
+                <header>
+                    <button class="btn btn-primary" name="fetch_sendgrid_stats" type="object">
+                        Sendgrid Stats
+                    </button>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="singlesend_id" invisible="1"/>
+                        <field name="singlesend_name"/>
+                        <group>
+                            <field name="sent"/>
+                            <field name="delivered"/>
+                            <field name="opens"/>
+                            <field name="clicks"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sendgrid_stats_view_tree" model="ir.ui.view">
+        <field name="name">Sendgrid Stats</field>
+        <field name="model">sendgrid.stats</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="singlesend_name"/>
+                <field name="sent"/>
+                <field name="delivered"/>
+                <field name="opens"/>
+                <field name="clicks"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_sendgrid_stats_view_tree" model="ir.actions.act_window">
+        <field name="name">Campaign Statistics</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sendgrid.stats</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sendgrid_stats_view_tree"/>
+    </record>
+
+    <menuitem
+            name="Sendgrid Campaigns"
+            id="sendgrid_stats_menu"
+            sequence="0"
+            action="action_sendgrid_stats_view_tree"/>
+
+</odoo>

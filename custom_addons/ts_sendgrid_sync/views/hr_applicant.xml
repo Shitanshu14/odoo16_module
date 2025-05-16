@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sendgrid_extends_hr_applicant" model="ir.ui.view">
+        <field name="name">hr.applicant.sendgrid</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form//sheet" position="before">
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': ['|',('synced_with_sendgrid', '=', True),('display_warning_applicant', '=', False)]}">
+                  This Contact is not Synced with Sendgrid
+                </div>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='email_from']" position="before">
+                <label for="synced_with_sendgrid"/>
+                <div class="o_row">
+                    <field name="display_warning_applicant" invisible="1"/>
+                    <field name="synced_with_sendgrid" invisible="1"/>
+                </div>
+            </xpath>
+<!--            <xpath expr="/form/sheet/div/button[@name='action_open_employee']" position="before">-->
+<!--                <button name="fetch_contacts_id_from_sendgrid" type="object" class="btn-primary"-->
+<!--                                    string="Set Contact ID" ></button>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="sendgrid_extends_hr_applicant_search" model="ir.ui.view">
+        <field name="name">hr.applicant.sendgrid.search</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="sendgrid_synced" string="Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', True)]"/>
+                <filter name="not_sendgrid_synced" string="Not Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="export_applicant_contact_from_odoo" model="ir.actions.server">
+        <field name="name">Export Applicant to SendGrid</field>
+        <field name="model_id" ref="model_hr_applicant"/>
+        <field name="binding_model_id" ref="model_hr_applicant"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.add_contact_from_odoo()
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+  <t t-name="email_validators.HrApplicantEmailValidationWidget" owl="1">
+    <div class="o_hr_applicant_email_validation_widget" style="margin-top: 5px;">
+        <t t-if="props.record.data.is_email_valid">
+            <i class="fa fa-check-circle text-success" title="Valid Email" style="font-size: 14px;"></i>
+        </t>
+        <t t-else="">
+            <i class="fa fa-times-circle text-danger" title="Invalid Email" style="font-size: 14px;"></i>
+            <div class="text-danger" style="margin-top: 4px;">
+                <t t-esc="props.record.data.email_validation_message"/>
+            </div>
+            <t t-if="props.record.data.show_validate_email_button">
+                <button type="button"
+                        t-on-click="validateEmail"
+                        class="btn btn-sm btn-success"
+                        style="margin-top: 4px;">Validate Email</button>
+            </t>
+        </t>
+    </div>
+  </t>
+</templates>

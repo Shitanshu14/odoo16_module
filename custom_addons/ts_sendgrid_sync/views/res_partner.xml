@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sendgrid_extends_res_partners" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form//sheet" position="before">
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': ['|',('synced_with_sendgrid', '=', True),('display_warning', '=', False)]}">
+                  This Contact is not Synced with Sendgrid
+                </div>
+            </xpath>
+            <xpath expr="/form/sheet/group/group/field[@name='function']" position="before">
+                <label for="synced_with_sendgrid"/>
+                <div class="o_row">
+                    <field name="display_warning" invisible="1"/>
+                    <field name="synced_with_sendgrid" invisible="1"/>
+<!--                                        <button name="add_contact_from_odoo" type="object" class="btn-primary" -->
+<!--                                        string="Add Contact" ></button>-->
+                </div>
+            </xpath>
+<!--            <xpath expr="/form/sheet/div[@name='button_box']" position="inside">-->
+<!--&lt;!&ndash;                <button name="button_to_link" type="object" string="Link Fields"/>&ndash;&gt;-->
+<!--                <button name="fetch_contacts_id_from_sendgrid" type="object" class="btn-primary"-->
+<!--                                    string="Set Contact ID" ></button>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="sendgrid_extends_res_partners_search" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="sendgrid_synced" string="Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', True)]"/>
+                <filter name="not_sendgrid_synced" string="Not Synced with Sendgrid" domain="[('synced_with_sendgrid', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="export_contact_from_odoo" model="ir.actions.server">
+        <field name="name">Export Contact to SendGrid</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.add_contact_from_odoo()
+        </field>
+    </record>
+
+<!--    <record id="fetch_statistics_from_sendgrid" model="ir.actions.server">-->
+<!--        <field name="name">Fetch SendGrid Stats</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="binding_model_id" ref="model_res_partner"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--            action = records.fetch_sendgrid_stats()-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="fetch_contacts_from_sendgrid" model="ir.actions.server">-->
+<!--        <field name="name">Import Contacts from SendGrid</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="binding_model_id" ref="model_res_partner"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--            action = records.fetch_contacts_from_sendgrid()-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+</odoo>
